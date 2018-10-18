@@ -1,0 +1,42 @@
+#include <msp430.h>
+#include <stdint.h>
+#include <intrinsics.h>
+
+#define R 0x04
+#define G 0x02
+#define Y 0x08
+
+#define PERIOD 32768
+
+#define LED_INIT \
+do{ \
+  P4DIR |= R+G+Y; \
+  P4OUT |= R+G+Y; \
+}while(0)
+
+// TBCCR0 interrupt handler: Interupt event handler
+__attribute__((interrupt(TIMERB0_VECTOR))) void timer_handler()
+{
+	P4OUT ^= R;
+	TBCCR0 += (uint16_t) PERIOD;
+}
+
+
+int main()
+{
+  // disable the watchdog timer
+  WDTCTL = WDTPW + WDTHOLD;
+  // Enable maskable interrupts (See intrinsics.h)
+  __eint();
+  // Initialize all leds to be off
+  LED_INIT;
+  // set TBCCR0 to trigger the interrupt as soon as possible, Would like the event to happen after 1 clock cycle
+  TBCCR0 = 1;
+  // Enable interrupts for TBCCR1-3, Set CCIE bit to 1 Which means interupt enabled CCIE is Capture/compare interupt enable
+  TBCCTL0 = CCIE;   
+
+  // 16 bits, continueous mode, ACLK select: Start the timer
+  TBCTL = TBSSEL_1 + CNTL_0 + MC_2 ;
+  //
+  LPM3;		
+}
