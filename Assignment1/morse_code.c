@@ -36,7 +36,7 @@ void push(){
 // Returns char array
 char* check_character(char c) { 
   switch(c) {:
-    case('a'):
+    case 'a':
       U0TXBUF = 1;
   }
   return ""; 
