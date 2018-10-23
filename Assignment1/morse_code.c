@@ -13,19 +13,22 @@
 // Keyboard input of characters
 //-------------------------------------------
 
-struct Buffer buf= {.size=0};
+struct Buffer ringbuf= {.in=0, .out=0, .size=0};
 
 
 
 void push(){
 // max size that im allowing
-  if(buf.size==32){
-    buf.size = 0;
+  if(ringbuf.size==32){
+    ringbuf.size = 0;
+    ringbuf.in=0;
+    ringbuf.out=0;
     return;
   };
 
-  buf.data[buf.size] = U0RXBUF; //issue here
-  buf.size++;
+  ringbuf.data[ringbuf.in] = U0RXBUF; //issue here
+  ringbuf.size++;
+  ringbuf.in = (ringbuf.in +1) % 32;
 }
 
 // Function that checks if char is one of the letters
@@ -43,16 +46,15 @@ char* check_character(char c) {
 }
 
 // Function that checks the ringbuffer that we are using and if the size
-//
+// is 0 and the buffer is empty than we return. If not than we check the
+// character that is in the buffer, see if the character is
 void pop(){
-  // If the buffer is empty
-  if(buf.size==0)
+  if(ringbuf.size==0)
     return;
-  // check single character in the buffer and return the morse code 
-  // string that corresponds
-  char* code = check_character(buf.data[buf.size]);
+  char* code = check_character(ringbuf.data[ringbuf.out]);
   //U0TXBUF = code;
-  buf.size--;
+  ringbuf.size--;
+  ringbuf.out = (ringbuf.out + 1) % 32;
 }
 
 // TBCCR1-3 interrupt handler
@@ -69,9 +71,9 @@ __attribute__((interrupt(TIMERB1_VECTOR))) void timer_handler()
 // receive interrupt handler
 __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
 {
-  if(buf.size == 32) { // if ringbuf size is full
+  if(ringbuf.size == 32) { // if ringbuf size is full
     return;
-  } else if(buf.size == 0) {
+  } else if(ringbuf.size == 0) {
     // start the clock
     TBCTL = TBSSEL_1 + CNTL_1 + MC_2 + TBIE + ID_3;
     };
@@ -82,7 +84,7 @@ __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
 __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
 {
     pop();
-    if(buf.size == 0){
+    if(ringbuf.size == 0){
         IE1 &= ~UTXIE0; // if there is nothing in the buffer dont transmit anything   
     }
 }
