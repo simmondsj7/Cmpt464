@@ -46,10 +46,11 @@ char* check_character(char c) {
 }
 
 void pop(){
-///////////////////////
+  // If the buffer is empty
   if(ringbuf.size==0)
     return;
-////////////////////////////////
+  // check single character in the buffer and return the morse code 
+  // string that corresponds
   char* code = check_character(ringbuf.data[ringbuf.out]);
   //U0TXBUF = code;
   ringbuf.size--;
