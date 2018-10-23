@@ -49,15 +49,15 @@ do { \
 
 // Macro Function that checks if char is one of the letters
 // if it is than return the char* of the morse code value
-#define check_character(char, morse_struct, letter_struct) \
+#define CHECK_CHARACTER(char, morse_struct, letter_struct) \
 do { \
  for(int i=0; i<= sizeof(MapAlpha(letter_struct)); i ++){ \
      if(MapAlpha(letter_struct[i].letter) = char(char)){ \
- 	return MorseCode(morse_struct[MapAlpha(letter_struct[i].number)].code); \
-	} else { \
-	return NULL; \
-	}; \
-    }; \
+ 	    return MorseCode(morse_struct[MapAlpha(letter_struct[i].number)].code); \
+	  } else { \
+	    return NULL; \
+	  }; \
+  }; \
 } while(0)
 
 
