@@ -48,7 +48,7 @@ void push(){
 void pop(){
   if(ringbuf.size==0)
     return;
-  char* code = check_character(ringbuf.data[ringbuf.out]);
+  uint8_t code = check_character(ringbuf.data[ringbuf.out]);
   //U0TXBUF = code;
   ringbuf.size--;
   ringbuf.out = (ringbuf.out + 1) % 32;
