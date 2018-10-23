@@ -21,7 +21,7 @@ struct Buffer ringbuf= {.in=0, .out=0, .size=0};
 uint8_t check_character(char c) { 
   switch(c) {
     case 'a' :
-      U0TXBUF = 1;
+      return 1;
     default :
       return -1;
   }
@@ -49,7 +49,7 @@ void pop(){
   if(ringbuf.size==0)
     return;
   uint8_t code = check_character(ringbuf.data[ringbuf.out]);
-  //U0TXBUF = code;
+  U0TXBUF = code;
   ringbuf.size--;
   ringbuf.out = (ringbuf.out + 1) % 32;
 }
