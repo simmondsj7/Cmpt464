@@ -49,8 +49,6 @@ do { \
 
 struct Buffer{
   uint8_t size;
-  uint8_t in;
-  uint8_t out;
   uint8_t data[64];
 };
 

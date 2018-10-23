@@ -13,27 +13,24 @@
 // Keyboard input of characters
 //-------------------------------------------
 
-struct Buffer ringbuf= {.in=0, .out=0 , .size=0};
+struct Buffer buf= {.size=0};
 
 
 
 void push(){
-//just checking
-///////////////////////
-  if(ringbuf.size==32){
-    ringbuf.size = 0;
-    ringbuf.in=0;
-    ringbuf.out=0;
+// max size that im allowing
+  if(buf.size==32){
+    buf.size = 0;
     return;
   };
-////////////////////////////////
-  ringbuf.data[ringbuf.in] = U0RXBUF; //issue here
-  ringbuf.size++;
-  ringbuf.in = (ringbuf.in + 1) % 32;
+
+  buf.data[buf.size] = U0RXBUF; //issue here
+  buf.size++;
 }
 
 // Function that checks if char is one of the letters
 // if it is than return the char* of the morse code value
+// Returns char array
 char* check_character(char c) { 
   for(int i=0; i<= sizeof(letters); i ++){ 
      if(letters[i].letter == c){ 
@@ -45,16 +42,17 @@ char* check_character(char c) {
   return ""; 
 }
 
+// Function that checks the ringbuffer that we are using and if the size
+//
 void pop(){
   // If the buffer is empty
-  if(ringbuf.size==0)
+  if(buf.size==0)
     return;
   // check single character in the buffer and return the morse code 
   // string that corresponds
-  char* code = check_character(ringbuf.data[ringbuf.out]);
+  char* code = check_character(buf.data[buf.size]);
   //U0TXBUF = code;
-  ringbuf.size--;
-  ringbuf.out = (ringbuf.out + 1) % 32;
+  buf.size--;
 }
 
 // TBCCR1-3 interrupt handler
@@ -71,9 +69,9 @@ __attribute__((interrupt(TIMERB1_VECTOR))) void timer_handler()
 // receive interrupt handler
 __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
 {
-  if(ringbuf.size == 32) { // if ringbuf size is full
+  if(buf.size == 32) { // if ringbuf size is full
     return;
-  } else if(ringbuf.size == 0) {
+  } else if(buf.size == 0) {
     // start the clock
     TBCTL = TBSSEL_1 + CNTL_1 + MC_2 + TBIE + ID_3;
     };
@@ -84,7 +82,7 @@ __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
 __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
 {
     pop();
-    if(ringbuf.size == 0){
+    if(buf.size == 0){
         IE1 &= ~UTXIE0; // if there is nothing in the buffer dont transmit anything   
     }
 }
