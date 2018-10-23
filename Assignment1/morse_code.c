@@ -34,10 +34,10 @@ void push(){
 
 // Function that checks if char is one of the letters
 // if it is than return the char* of the morse code value
-char* check_character(char c, MorseCode morse_struct, MapAlpha letter_struct) { 
-  for(int i=0; i<= sizeof(letter_struct); i ++){ 
-     if(letter_struct[i].letter = c){ 
- 	    return morse_struct[letter_struct[i].number].code; 
+char* check_character(c) { 
+  for(int i=0; i<= sizeof(letters); i ++){ 
+     if(letters[i].letter = c){ 
+ 	    return morse[letters[i].number].code; 
 	  } else { 
 	    return ""; 
 	  }; 
