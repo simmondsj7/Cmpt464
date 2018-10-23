@@ -47,22 +47,6 @@ do { \
  letters[0].number = 0; \
 } while(0)
 
-// Macro Function that checks if char is one of the letters
-// if it is than return the char* of the morse code value
-#define CHECK_CHARACTER(char, morse_struct, letter_struct) \
-do { \
- for(int i=0; i<= sizeof(MapAlpha(letter_struct)); i ++){ \
-     if(MapAlpha(letter_struct[i].letter) = char(char)){ \
- 	    return MorseCode(morse_struct[MapAlpha(letter_struct[i].number)].code); \
-	  } else { \
-	    return NULL; \
-	  }; \
-  }; \
-} while(0)
-
-
- 
-
 struct Buffer{
   uint8_t size;
   uint8_t in;

@@ -32,6 +32,18 @@ void push(){
   ringbuf.in = (ringbuf.in + 1) % 32;
 }
 
+// Function that checks if char is one of the letters
+// if it is than return the char* of the morse code value
+char* check_character(char, MorseCode morse_struct, MapAlpha letter_struct) { 
+  for(int i=0; i<= sizeof(letter_struct); i ++){ 
+     if(letter_struct[i].letter = char(char)){ 
+ 	    return morse_struct[letter_struct[i].number].code; 
+	  } else { 
+	    return NULL; 
+	  }; 
+  }; 
+}
+
 void pop(){
 ///////////////////////
   if(ringbuf.size==0)
