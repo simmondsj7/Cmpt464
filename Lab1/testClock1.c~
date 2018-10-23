@@ -1,0 +1,48 @@
+#include<msp430.h>
+#include<stdint.h>
+#include<intrinsics.h>
+
+#define G 0x02
+
+#define delay_100ms(x) \
+do{ \
+uint16_t i = (x); \
+while(i--) __delay_cycles(600000); \
+}while(0)
+
+// Enable high speed source MCLK from XT2 (a crystal)
+// It follows the procedure in 4-12 in MSP430 user guide.
+void Switch_XT2()
+{
+	register uint8_t i;
+	do{
+		//1. switch on the crystal oscillator
+		BCSCTL1 &= ~XT2OFF;
+		//2. clear OFIFG flag
+		IFG1 &= ~OFIFG;
+		//3. wait approximately 50 usec
+		i=255;
+		while(i--);
+	// 4. test OFIFG bit and repeat steps 1-4 till OFIFG is cleared 
+	}while(IFG1&OFIFG);
+	//5. Select XT2
+	BCSCTL2=SELM_2;
+}
+int main()
+{
+	WDTCTL = WDTPW + WDTHOLD;
+	Switch_XT2();
+	while(1)
+	{
+		P4DIR |= G;
+		P4OUT &= ~G;
+		delay_100ms(10);
+		//__delay_cycles(6000000);
+		P4DIR &= ~G;
+		//P4OUT |= G;
+		delay_100ms(10);
+		//__delay_cycles(6000000);
+	}
+
+	return 0;
+}
