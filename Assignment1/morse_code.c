@@ -18,6 +18,7 @@ struct Buffer ringbuf= {.in=0, .out=0 , .size=0};
 
 
 void push(){
+//just checking
 ///////////////////////
 if(ringbuf.size==32){
    ringbuf.size = 0;
