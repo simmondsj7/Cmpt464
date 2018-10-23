@@ -35,13 +35,9 @@ void push(){
 // if it is than return the char* of the morse code value
 // Returns char array
 char* check_character(char c) { 
-  for(int i=0; i<= sizeof(letters); i ++){ 
-     if(letters[i].letter == c){ 
- 	    return morse[letters[i].number].code; 
-	  } else { 
-	    break; 
-	  }; 
-  };
+  switch(c):
+    case('a'):
+      U0TXBUF = 1;
   return ""; 
 }
 
