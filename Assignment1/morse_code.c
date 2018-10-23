@@ -20,27 +20,27 @@ struct Buffer ringbuf= {.in=0, .out=0 , .size=0};
 void push(){
 //just checking
 ///////////////////////
-if(ringbuf.size==32){
-   ringbuf.size = 0;
-   ringbuf.in=0;
-   ringbuf.out=0;
-   return;
+  if(ringbuf.size==32){
+    ringbuf.size = 0;
+    ringbuf.in=0;
+    ringbuf.out=0;
+    return;
   };
 ////////////////////////////////
-    ringbuf.data[ringbuf.in] = U0RXBUF; //issue here
-    ringbuf.size++;
-    ringbuf.in = (ringbuf.in + 1) % 32;
+  ringbuf.data[ringbuf.in] = U0RXBUF; //issue here
+  ringbuf.size++;
+  ringbuf.in = (ringbuf.in + 1) % 32;
 }
 
 void pop(){
 ///////////////////////
-    if(ringbuf.size==0)
-        return;
+  if(ringbuf.size==0)
+    return;
 ////////////////////////////////
-    char* code = check_character(ringbuf.data[rinfbuf.out], morse, letters);
-    U0TXBUF = code;
-    ringbuf.size--;
-    ringbuf.out = (ringbuf.out + 1) % 32;
+  char* code = check_character(ringbuf.data[rinfbuf.out], morse, letters);
+  U0TXBUF = code;
+  ringbuf.size--;
+  ringbuf.out = (ringbuf.out + 1) % 32;
 }
 
 // TBCCR1-3 interrupt handler

@@ -54,7 +54,7 @@ do { \
  for(int i=0; i<= sizeof(MapAlpha(letter_struct)); i ++){ \
      if(MapAlpha(letter_struct[i].letter) = char(char)){ \
  	return MorseCode(morse_struct[MapAlpha(letter_struct[i].number)].code); \
-	} else {\
+	} else { \
 	return NULL; \
 	}; \
     }; \
