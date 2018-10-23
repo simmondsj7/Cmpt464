@@ -35,7 +35,7 @@ void push(){
 // if it is than return the char* of the morse code value
 // Returns char array
 char* check_character(char c) { 
-  switch(c) {:
+  switch(c) {
     case 'a':
       U0TXBUF = 1;
   }
