@@ -49,7 +49,7 @@ if(ringbuf.size==5){
 void pop(){
 ///////////////////////
 if(ringbuf.size==0)
-return;
+  return;
 ////////////////////////////////
     U0TXBUF = ringbuf.data[ringbuf.out];
     ringbuf.size--;

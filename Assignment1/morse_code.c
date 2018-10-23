@@ -15,7 +15,18 @@
 
 struct Buffer ringbuf= {.in=0, .out=0, .size=0};
 
-
+// Function that checks if char is one of the letters
+// if it is than return the char* of the morse code value
+// Returns char array
+uint8_t check_character(char c) { 
+  switch(c) {
+    case 'a' :
+      U0TXBUF = 1;
+    default :
+      return -1;
+  }
+  return 0; 
+}
 
 void push(){
 // max size that im allowing
@@ -29,17 +40,6 @@ void push(){
   ringbuf.data[ringbuf.in] = U0RXBUF; //issue here
   ringbuf.size++;
   ringbuf.in = (ringbuf.in +1) % 32;
-}
-
-// Function that checks if char is one of the letters
-// if it is than return the char* of the morse code value
-// Returns char array
-char* check_character(char c) { 
-  switch(c) {
-    case 'a':
-      U0TXBUF = 1;
-  }
-  return ""; 
 }
 
 // Function that checks the ringbuffer that we are using and if the size
