@@ -39,9 +39,10 @@ char* check_character(char c) {
      if(letters[i].letter == c){ 
  	    return morse[letters[i].number].code; 
 	  } else { 
-	    return ""; 
+	    break; 
 	  }; 
-  }; 
+  };
+  return ""; 
 }
 
 void pop(){
@@ -49,7 +50,7 @@ void pop(){
   if(ringbuf.size==0)
     return;
 ////////////////////////////////
-  char* code = check_character(ringbuf.data[rinfbuf.out]);
+  char* code = check_character(ringbuf.data[ringbuf.out]);
   //U0TXBUF = code;
   ringbuf.size--;
   ringbuf.out = (ringbuf.out + 1) % 32;
