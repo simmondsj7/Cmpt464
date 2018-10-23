@@ -60,7 +60,7 @@ typedef struct{
 } MorseCode;
 
 typedef struct{
-  char* letter; 
+  char letter; 
   uint8_t number; 
 } MapAlpha;
 
