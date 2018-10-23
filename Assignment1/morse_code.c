@@ -38,7 +38,7 @@ void pop(){
     return;
 ////////////////////////////////
   char* code = check_character(ringbuf.data[rinfbuf.out], morse, letters);
-  U0TXBUF = code;
+  //U0TXBUF = code;
   ringbuf.size--;
   ringbuf.out = (ringbuf.out + 1) % 32;
 }
