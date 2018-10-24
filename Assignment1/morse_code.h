@@ -17,8 +17,8 @@ do{ \
 }while(0) 
 
 #define SET_TIME(x) \
-do{
-  PERIOD * x;
+do{ \
+  retval = PERIOD * x; \
 } while(0)
 
 #define DOT_ON \
