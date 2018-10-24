@@ -3,6 +3,7 @@
 #include <intrinsics.h>
 #include "morse_code.h"
 #include <stdlib.h>
+#include <string.h>
 
 //------------------------------------------
 // John Simmonds
