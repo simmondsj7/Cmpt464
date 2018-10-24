@@ -44,7 +44,7 @@ do{ \
  morse[0].letter ='a'; \
  morse[0].code =".-"; \
  morse[1].letter ='b'; \
- morse[1].code="-..." \
+ morse[1].code="-..."; \
 } while(0)
 
 

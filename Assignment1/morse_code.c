@@ -27,9 +27,9 @@ void buf_to_morse(){
   morse_string_index = 0;
   switch (ringbuf.data[ringbuf.in]){
     case 'a':
-      morse_string = morse[0].code;
+      strcpy(morse_string, morse[0].code);
     case 'b':
-      morse_string = morse[0].code;
+      strcpy(morse_string, morse[1].code);
   }
   ringbuf.in = (ringbuf.in - 1) % 32;
 }
@@ -98,7 +98,7 @@ __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
 
 int main() {
   //Initialize structure
-  INIT_STRUCT;
+  INIT_MORSE_STRUCT;
   // disable the watchdog timer
   WDTCTL = WDTPW + WDTHOLD;
   // Enable maskable interrupts (See intrinsics.h)
