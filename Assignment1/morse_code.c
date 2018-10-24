@@ -13,7 +13,7 @@
 // Keyboard input of characters
 //-------------------------------------------
 
-Buffer ringbuf= {.in=0, .out=0, .size=0};
+ringbuf= {.in=0, .out=0, .size=0};
 
 char morse_string[7];
 uint8_t morse_string_index;
