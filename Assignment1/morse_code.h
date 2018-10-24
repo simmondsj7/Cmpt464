@@ -16,6 +16,10 @@ do{ \
   P4OUT |= R+G+Y; \
 }while(0) 
 
+#define SET_TIME(x) \
+do{
+  PERIOD * x;
+} while(0)
 
 #define DOT_ON \
 do{ \
@@ -35,17 +39,14 @@ do{ \
   P3SEL |= 0x30; \
 }while(0)
 
-#define INIT_STRUCT \
+#define INIT_MORSE_STRUCT \
 do{ \
- morse[0].hex =0x61; \
+ morse[0].letter ='a'; \
  morse[0].code =".-"; \
+ morse[1].letter ='b'; \
+ morse[1].code="-..." \
 } while(0)
 
-#define SET_MAP \
-do { \
- letters[0].letter ="a"; \
- letters[0].number = 0; \
-} while(0)
 
 struct Buffer{
   uint8_t size;
@@ -55,17 +56,11 @@ struct Buffer{
 };
 
 typedef struct{
-    uint8_t hex; 
-    char* code;
+    char letter; 
+    char code[7];
 } MorseCode;
 
-typedef struct{
-  char letter; 
-  uint8_t number; 
-} MapAlpha;
-
 MorseCode morse[s];
-MapAlpha letters[s];
 	
 
 

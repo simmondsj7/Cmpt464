@@ -15,41 +15,50 @@
 
 struct Buffer ringbuf= {.in=0, .out=0, .size=0};
 
-// Function that checks if char is one of the letters
-// if it is than return the char* of the morse code value
-// Returns char array
-uint8_t check_character(char c) { 
-  switch(c) {
-    case 'a' :
-      return 1;
-    default :
-      return -1;
+char morse_string[7];
+uint8_t morse_string_index;
+
+uint8_t idle_flag;
+
+// function that checks the character buffer at the last fill point
+// if its a valid character than set the corresponding morse code string
+// to the morse string that we will iterate later. Also decrements the 
+// position that of the in buffer because that character is no longer needed.
+// Also starts the index for the morse string to zero for every case
+void buf_to_morse(){
+  morse_string_index = 0;
+  switch (ringbuf.data[ringbuf.in]){
+    case 'a':
+      morse_string = morse[0].code;
+    case 'b':
+      morse_string = morse[0].code;
   }
-  return 0; 
+  ringbuf.in = (ringbuf.in - 1) % 32;
 }
 
-void push(){
-// max size that im allowing
-  if(ringbuf.size==32){
-    ringbuf.size = 0;
-    ringbuf.in=0;
-    ringbuf.out=0;
-    return;
-  };
 
-  ringbuf.data[ringbuf.in] = U0RXBUF; //issue here
-  ringbuf.size++;
-  ringbuf.in = (ringbuf.in +1) % 32;
+void push(){
+// max size that im allowing. if the buffer is full do nothing
+  if(ringbuf.size==32){
+    return;
+  }else if(ringbuf.size>=0){
+    // if the buffer is empty of greater than 0
+    ringbuf.data[ringbuf.in] =U0RXBUF;
+    ringbuf.size++;
+    ringbuf.in = (ringbuf.in +1) % 32;
+    return;
+  } 
 }
 
 // Function that checks the ringbuffer that we are using and if the size
 // is 0 and the buffer is empty than we return. If not than we check the
 // character that is in the buffer, see if the character is
 void pop(){
-  if(ringbuf.size==0)
+  if(ringbuf.size==0) {
+    // turns clock off
     TBCTL = MC_0;
-  uint8_t code = check_character(ringbuf.data[ringbuf.out]);
-  U0TXBUF = 'r';
+  }
+  //U0TXBUF = 'r';
   ringbuf.size--;
   ringbuf.out = (ringbuf.out + 1) % 32;
 }
@@ -68,11 +77,12 @@ __attribute__((interrupt(TIMERB1_VECTOR))) void timer_handler()
 // receive interrupt handler
 __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
 {
-  if(ringbuf.size == 32) { // if ringbuf size is full
+  if(ringbuf.size == 32) { // if ringbuf size is full do nothing
     return;
   } else if(ringbuf.size == 0) {
-    // start the clock
-    TBCTL = TBSSEL_1 + CNTL_1 + MC_2 + TBIE + ID_3;
+    //First time that you enter the buffer enable the timer
+    TBCTL = TBSSEL_1 + CNTL_0 + MC_2 ;
+    push();
     };
     push();
 }
