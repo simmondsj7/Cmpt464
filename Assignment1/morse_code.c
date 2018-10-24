@@ -47,9 +47,9 @@ void push(){
 // character that is in the buffer, see if the character is
 void pop(){
   if(ringbuf.size==0)
-    return;
+    TBCTL = MC_0;
   uint8_t code = check_character(ringbuf.data[ringbuf.out]);
-  U0TXBUF = code;
+  U0TXBUF = 'r';
   ringbuf.size--;
   ringbuf.out = (ringbuf.out + 1) % 32;
 }
@@ -82,6 +82,7 @@ __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
 {
     pop();
     if(ringbuf.size == 0){
+      //Sending process should be sychronized with the led status change
         IE1 &= ~UTXIE0; // if there is nothing in the buffer dont transmit anything   
     }
 }
@@ -110,6 +111,7 @@ int main() {
   // Reset SWRST bit
   U0CTL &= ~SWRST;
   // Enable receiver interrupt
+  IE1 |= URXIE0
 
   LOW_POWER_MODE;
   // Initialize all leds to be off
