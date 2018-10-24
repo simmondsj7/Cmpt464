@@ -3,7 +3,7 @@
 #include <intrinsics.h>
 #include "morse_code.h"
 #include <stdlib.h>
-
+#include <string.h>
 //------------------------------------------
 // John Simmonds
 // Cmpt 464
@@ -56,20 +56,16 @@ void pop(){
     // turns clock off
     TBCTL = MC_0;
   }
-  //U0TXBUF = 'r';
+  // make the tranmitter buffer equal to the character that is in the morse_string char*
+  U0TXBUF = morse_string[morse_string_index];
   ringbuf.size--;
   ringbuf.out = (ringbuf.out + 1) % 32;
 }
 
 // TBCCR1-3 interrupt handler
-__attribute__((interrupt(TIMERB1_VECTOR))) void timer_handler()
+__attribute__((interrupt(TIMERB0_VECTOR))) void timer_handler()
 {
-    // Accessing TBIV automatically resets the hight pending interrupt flag
-  switch(TBIV)
-    {
-    case TBIV_TBIFG:
-      IE1 |=   UTXIE0;
-    }
+    
 }
 
 // receive interrupt handler
