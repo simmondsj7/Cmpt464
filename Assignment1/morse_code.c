@@ -111,7 +111,7 @@ int main() {
   // Reset SWRST bit
   U0CTL &= ~SWRST;
   // Enable receiver interrupt
-  IE1 |= URXIE0
+  IE1 |= URXIE0;
 
   LOW_POWER_MODE;
   // Initialize all leds to be off
