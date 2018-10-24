@@ -48,12 +48,12 @@ do{ \
 } while(0)
 
 
-typedef struct Buffer{
+typedef struct{
   uint8_t size;
   uint8_t in;
   uint8_t out;
   uint8_t data[64];
-} ringbuf;
+} Buffer;
 
 typedef struct{
     char letter; 
@@ -61,6 +61,7 @@ typedef struct{
 } MorseCode;
 
 MorseCode morse[s];
+Buffer ringbuf= {.in=0, .out=0, .size=0};
 	
 
 
