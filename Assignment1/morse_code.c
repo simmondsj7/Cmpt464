@@ -14,7 +14,7 @@
 // Keyboard input of characters
 //-------------------------------------------
 
-char morse_string[7];
+char* morse_string;
 uint8_t morse_string_index;
 
 uint8_t idle_flag;
@@ -28,9 +28,9 @@ void buf_to_morse(){
   morse_string_index = 0;
   switch (ringbuf.data[ringbuf.in]){
     case 'a':
-      strcpy(morse_string, morse[0].code);
+      morse_string = morse[0].code;
     case 'b':
-      strcpy(morse_string, morse[1].code);
+      morse_string = morse[1].code;
   }
   ringbuf.in = (ringbuf.in - 1) % 32;
 }

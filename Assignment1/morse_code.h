@@ -57,7 +57,7 @@ typedef struct{
 
 typedef struct{
     char letter; 
-    char code[7];
+    char* code;
 } MorseCode;
 
 MorseCode morse[s];
