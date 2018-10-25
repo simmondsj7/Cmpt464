@@ -66,6 +66,7 @@ __attribute__((interrupt(TIMERB0_VECTOR))) void timer_handler()
 {
     //TODO: use the buf_to_morse function here I think and also move the global pointer 
     //      to the index of the next morse character 
+    
 }
 
 // receive interrupt handler
