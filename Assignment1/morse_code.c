@@ -64,7 +64,8 @@ void pop(){
 // TBCCR1-3 interrupt handler
 __attribute__((interrupt(TIMERB0_VECTOR))) void timer_handler()
 {
-    
+    //TODO: use the buf_to_morse function here I think and also move the global pointer 
+    //      to the index of the next morse character
 }
 
 // receive interrupt handler
@@ -85,7 +86,7 @@ __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
 {
     pop();
     if(ringbuf.size == 0){
-      //Sending process should be sychronized with the led status change
+      //TODO: Sending process should be sychronized with the led status change
         IE1 &= ~UTXIE0; // if there is nothing in the buffer dont transmit anything   
     }
 }
