@@ -13,7 +13,8 @@
 //-------------------------------------------
 
 char* morse_string;
-uint8_t morse_string_index;
+// start the index at the beginning of the string
+uint8_t morse_string_index = 0;
 
 uint8_t idle_flag;
 
@@ -23,14 +24,11 @@ uint8_t idle_flag;
 // position that of the in buffer because that character is no longer needed.
 // Also starts the index for the morse string to zero for every case
 void buf_to_morse(){
-  morse_string_index = 0;
   switch (ringbuf.data[ringbuf.in]){
-    case 'a':
-      morse_string = morse[0].code;
-    case 'b':
-      morse_string = morse[1].code;
-  }
-  ringbuf.in = (ringbuf.in - 1) % 32;
+  case 'a':
+    morse_string = morse[0].code;
+  case 'b':
+    morse_string = morse[1].code;
 }
 
 
@@ -56,28 +54,40 @@ void pop(){
     TBCTL = MC_0;
   }
   // make the tranmitter buffer equal to the character that is in the morse_string char*
+  buf_to_morse();
   U0TXBUF = morse_string[morse_string_index];
+  morse_string_index ++;
   ringbuf.size--;
   ringbuf.out = (ringbuf.out + 1) % 32;
 }
 
 // TBCCR1-3 interrupt handler
-__attribute__((interrupt(TIMERB0_VECTOR))) void timer_handler()
-{
-    //TODO: use the buf_to_morse function here I think and also move the global pointer 
-    //      to the index of the next morse character 
-    
+ __attribute__((interrupt(TIMERB0_VECTOR))) void timer_handler()
+ {
+
+   switch(morse_string[morse_string_index]){
+   case '.':
+     TBCCR0 += DOT;
+     IE1 |= UTXIE0;
+   case '-':
+     TBCCR0 += DASH;
+     IE1 |= UTXIE0;
+   }
+   
 }
 
 // receive interrupt handler
 __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
 {
+  // enable the timer
   if(ringbuf.size == 32) { // if ringbuf size is full do nothing
     return;
   } else if(ringbuf.size == 0) {
-    //First time that you enter the buffer enable the timer
-    TBCTL = TBSSEL_1 + CNTL_0 + MC_2 ;
-    push();
+    // First time that you enter the buffer enable the timer
+    // trigger timer interupt right away
+    TBCCR0 = 1;
+    TBCCTL0 = CCIE;
+    TBCTL = TBSSEL_1 + CNTL_0 + MC_2;
     };
     push();
 }
@@ -121,4 +131,5 @@ int main() {
   LOW_POWER_MODE;
   // Initialize all leds to be off
   LED_INIT;
+  return 0;
 }

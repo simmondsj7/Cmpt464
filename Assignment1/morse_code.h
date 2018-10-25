@@ -6,8 +6,8 @@
 
 #define PERIOD 32768 //Number of clock cycles in one second
 
-#define DASH (uint_16)(PERIOD)*(0.360) //360ms for Dash Period
-#define DOT 1 (uint_16)(PERIOD)*(0.120) // 120ms for Dot Period
+#define DASH (uint16_t)(PERIOD)*(0.360) //360ms for Dash Period
+#define DOT (uint16_t)(PERIOD)*(0.120) // 120ms for Dot Period
 
 //init all of the LEDs to be off
 #define LED_INIT \
