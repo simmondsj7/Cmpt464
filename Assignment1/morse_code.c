@@ -49,7 +49,7 @@ void push(){
 
 // Function that checks the ringbuffer that we are using and if the size
 // is 0 and the buffer is empty than we return. If not than we check the
-// character that is in the buffer, see if the character is
+// character that is in the buffer, see if the character is 
 void pop(){
   if(ringbuf.size==0) {
     // turns clock off
