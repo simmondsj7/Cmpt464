@@ -26,7 +26,7 @@ uint8_t first_character_flag =0;
 // position that of the in buffer because that character is no longer needed.
 // Also starts the index for the morse string to zero for every case
 void buf_to_morse(){
-  switch (ringbuf.data[ringbuf.out]){
+  switch (ringbuf.data[ringbuf.in]){
   case 'a':
     morse_string = morse[0].code;
   case 'b':
@@ -57,6 +57,8 @@ void pop(){
     TBCTL = MC_0;
   }
   buf_to_morse();
+  U0TXBUF = morse_string[morse_string_index];
+  IE1 |= UTXIE0;
   ringbuf.size--;
   ringbuf.out = (ringbuf.out + 1) % 32;
 }
@@ -80,13 +82,12 @@ __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
   // enable the timer
   if(ringbuf.size == 32) { // if ringbuf size is full do nothing
     return;
-  } 
-  if (first_character_flag == 1){
-    // if the first character in the ringbuffer
-    TBCCR0 = 1;
-    TBCCTL0 = CCIE; 
-    TBCTL = TBSSEL_1 + CNTL_0 + MC_2;
-  }
+  } else if (ringbuf.size == 0) {
+        TBCCR0 = 1;
+        TBCCTL0 = CCIE; 
+        TBCTL = TBSSEL_0 + CNTL_0 + MC_1;
+    }
+  
   push();
 }
 
@@ -98,9 +99,7 @@ __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
       //TODO: Sending process should be sychronized with the led status change
       IE1 &= ~UTXIE0; // if there is nothing in the buffer dont transmit anything
 
-  } else if (ringbuf.size != 0 ){
-    U0TXBUF = morse_string[morse_string_index];
-  }
+  } 
 }
 
 
