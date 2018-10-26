@@ -18,6 +18,8 @@ uint8_t morse_string_index = 0;
 
 uint8_t idle_flag;
 
+uint8_t first_character_flag =0;
+
 // function that checks the character buffer at the last fill point
 // if its a valid character than set the corresponding morse code string
 // to the morse string that we will iterate later. Also decrements the 
@@ -79,6 +81,12 @@ __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
   if(ringbuf.size == 32) { // if ringbuf size is full do nothing
     return;
   } 
+  if (first_character_flag == 1){
+    // if the first character in the ringbuffer
+    TBCCR0 = 1;
+    TBCCTL0 = CCIE; 
+    TBCTL = TBSSEL_1 + CNTL_0 + MC_2;
+  }
   push();
 }
 
@@ -88,11 +96,10 @@ __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
     pop();
     if(ringbuf.size == 0){
       //TODO: Sending process should be sychronized with the led status change
-        IE1 &= ~UTXIE0; // if there is nothing in the buffer dont transmit anything   
+      IE1 &= ~UTXIE0; // if there is nothing in the buffer dont transmit anything
+
   } else if (ringbuf.size != 0 ){
-    TBCCR0 = 1;
-    TBCCTL0 = CCIE; 
-    TBCTL = TBSSEL_1 + CNTL_0 + MC_2;
+    U0TXBUF = morse_string[morse_string_index];
   }
 }
 
