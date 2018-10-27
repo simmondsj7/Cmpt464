@@ -16,9 +16,10 @@ char *morse_string;
 // start the index at the beginning of the string
 int morse_string_index = 0;
 int global_length = 0;
+int start_transmit = 0; 
+int end_transmit = 0;
 int wait_stage = 0; // 1 is between DOT or dash in morse
                     // 2 is between Letters
-                    // 3 is between Word
 
 uint8_t idle_flag;
 
@@ -199,10 +200,19 @@ void buf_to_morse(){
 void push(){
 // max size that im allowing. if the buffer is full do nothing
   if(ringbuf.size==32){
+    ringbuf.data[ringbuf.in] = '@';
+    ringbuf.size++;
+    ringbuf.in = (ringbuf.in +1) % 32;
+    return
     return;
-  }else if(ringbuf.size>=0){
+  }else if(ringbuf.size>0){
     // if the buffer is empty of greater than 0
     ringbuf.data[ringbuf.in] =U0RXBUF;
+    ringbuf.size++;
+    ringbuf.in = (ringbuf.in +1) % 32;
+    return;
+  } else if (ringbuf.size == 0){
+    ringbuf.data[ringbuf.in] = '~';
     ringbuf.size++;
     ringbuf.in = (ringbuf.in +1) % 32;
     return;
@@ -218,7 +228,6 @@ void pop(){
     TBCTL = MC_0;
     return;
   }
-
   U0TXBUF = morse_string[morse_string_index];
   morse_string_index ++; 
 }
@@ -226,6 +235,9 @@ void pop(){
 // Timer interupt
  __attribute__((interrupt(TIMERB0_VECTOR))) void timer_handler()
  {
+  if (start_transmit = 1){
+
+  }
   buf_to_morse();
   switch (wait_stage){
   case 0:
