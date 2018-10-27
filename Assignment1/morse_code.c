@@ -15,6 +15,7 @@
 char *morse_string;
 // start the index at the beginning of the string
 int morse_string_index = 0;
+int global_length = 0;
 
 uint8_t idle_flag;
 
@@ -29,83 +30,160 @@ void buf_to_morse(){
   switch (ringbuf.data[ringbuf.out]){
   case 'a':
     morse_string = m[0].code;
-     break;
+    global_length = m[0].length;
+    break;
   case 'b':
     morse_string = m[1].code;
+    global_length = m[1].length;
+    break;
   case 'c':
     morse_string = m[2].code;
+    global_length = m[2].length;
+    break;
   case 'd':
     morse_string = m[3].code;
+    global_length = m[3].length;
+    break;
   case 'e':
     morse_string = m[4].code;
+    global_length = m[4].length;
+    break;
   case 'f':
     morse_string = m[5].code;
+    global_length = m[5].length;
+    break;
   case 'g':
     morse_string = m[6].code;
+    global_length = m[6].length;
+    break;
   case 'h':
     morse_string = m[7].code;
+    global_length = m[7].length;
+    break;
   case 'i':
     morse_string = m[8].code;
+    global_length = m[8].length;
+    break;
   case 'j':
     morse_string = m[9].code;
+    global_length = m[9].length;
+    break;
   case 'k':
     morse_string = m[10].code;
+    global_length = m[10].length;
+    break;
   case 'l':
     morse_string = m[11].code;
+    global_length = m[11].length;
+    break;
   case 'm':
     morse_string = m[12].code;
+    global_length = m[12].length;
+    break;
   case 'n':
     morse_string = m[13].code;
+    global_length = m[13].length;
+    break;
   case 'o':
     morse_string = m[14].code;
+    global_length = m[14].length;
+    break;
   case 'p':
     morse_string = m[15].code;
+    global_length = m[15].length;
+    break;
   case 'q':
     morse_string = m[16].code;
+    global_length = m[17].length;
+    break;
   case 'r':
     morse_string = m[17].code;
+    global_length = m[17].length;
+    break;
   case 's':
     morse_string = m[18].code;
+    global_length = m[18].length;
+    break;
   case 't':
     morse_string = m[19].code;
+    global_length = m[19].length;
+    break;
   case 'u':
     morse_string = m[20].code;
+    global_length = m[20].length;
+    break;
   case 'v':
     morse_string = m[21].code;
+    global_length = m[21].length;
+    break;
   case 'w':
     morse_string = m[22].code;
+    global_length = m[22].length;
+    break;
   case 'x':
     morse_string = m[23].code;
+    global_length = m[23].length;
+    break;
   case 'y':
     morse_string = m[24].code;
+    global_length = m[24].length;
+    break;
   case 'z':
     morse_string = m[25].code;
+    global_length = m[25].length;
+    break;
   case '1':
     morse_string = m[26].code;
+    global_length = m[26].length;
+    break;
   case '2':
     morse_string = m[27].code;
+    global_length = m[27].length;
+    break;
   case '3':
     morse_string = m[28].code;
+    global_length = m[28].length;
+    break;
   case '4':
     morse_string = m[29].code;
+    global_length = m[29].length;
+    break;
   case '5':
     morse_string = m[30].code;
+    global_length = m[30].length;
+    break;
   case '6':
     morse_string = m[31].code;
+    global_length = m[31].length;
+    break;
   case '7':
     morse_string = m[32].code;
+    global_length = m[32].length;
+    break;
   case '8':
     morse_string = m[33].code;
+    global_length = m[33].length;
+    break;
   case '9':
     morse_string = m[34].code;
+    global_length = m[34].length;
+    break;
   case '0':
     morse_string = m[35].code;
+    global_length = m[35].length;
+    break;
   case '.':
     morse_string = m[36].code;
+    global_length = m[36].length;
+    break;
   case '@':
     morse_string = m[37].code;
+    global_length = m[37].length;
+    break;
   case '~':
     morse_string = m[38].code;
+    global_length = m[38].length;
+    break;
   }
 }
 
@@ -141,8 +219,7 @@ void pop(){
 // Timer interupt
  __attribute__((interrupt(TIMERB0_VECTOR))) void timer_handler()
  {
-IE1 |= UTXIE0;
- if (morse_string_index >= 2){
+ if (morse_string_index >= global_length){
     ringbuf.size--;
     ringbuf.out = (ringbuf.out + 1) % 32;
 	  DOT_ON;
@@ -154,15 +231,15 @@ IE1 |= UTXIE0;
    switch(morse_string[morse_string_index]){
    case '.':
      TBCCR0 += DOT;
-     //IE1 |= UTXIE0;
+     IE1 |= UTXIE0;
+     break;
     
 
 	break;
    case '-':
      TBCCR0 += DASH;
-     //IE1 |= UTXIE0;
-      break;
-   //case '\0':
+     IE1 |= UTXIE0;
+     break;
     //IE1 &= ~UTXIE0;
      //ringbuf.size--;
   //ringbuf.out = (ringbuf.out + 1) % 32;
@@ -181,7 +258,7 @@ __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
   } else if (ringbuf.size == 0) {
         TBCCR0 = 1;
         TBCCTL0 = CCIE; 
-        TBCTL = TBSSEL_1 + CNTL_0 + MC_2+TBCLR;
+        TBCTL = TBSSEL_1 + CNTL_0 + MC_2 + TBCLR;
 	
     }
   
@@ -191,7 +268,7 @@ __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
 // transmit interrupt handler
 __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
 {
- P4OUT ^= 0x02;
+    P4OUT ^= 0x02; 
     pop();
     if(ringbuf.size == 0){
       //TODO: Sending process should be sychronized with the led status change
