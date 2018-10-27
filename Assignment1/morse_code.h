@@ -39,15 +39,6 @@ do{ \
   P3SEL |= 0x30; \
 }while(0)
 
-#define INIT_MORSE_STRUCT \
-do{ \
- morse[0].letter ='a'; \
- morse[0].code =".-"; \
- morse[1].letter ='b'; \
- morse[1].code="-..."; \
-} while(0)
-
-
 typedef struct{
   uint8_t size;
   uint8_t in;
@@ -57,11 +48,10 @@ typedef struct{
 
 typedef struct{
     char letter; 
-    char* code;
+    char code[7];
 } MorseCode;
+
+MorseCode m[2] = {{.letter = 'a', .code = ".-"}, {.letter = 'b', .code = "_..."}};
 
 MorseCode morse[s];
 Buffer ringbuf= {.in=0, .out=0, .size=0};
-	
-
-
