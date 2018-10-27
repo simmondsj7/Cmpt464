@@ -199,23 +199,23 @@ void buf_to_morse(){
 
 void push(){
 // max size that im allowing. if the buffer is full do nothing
-  if(ringbuf.size==32){
-    ringbuf.data[ringbuf.in] = '@';
+  if(ringbuf.size==31){
+    ringbuf.data[ringbuf.in] ='@';
     ringbuf.size++;
     ringbuf.in = (ringbuf.in +1) % 32;
     return;
-  }else if(ringbuf.size>0){
+  }else if(ringbuf.size>=0){
+    if (ringbuf.size == 0){
+      ringbuf.data[ringbuf.in] = '~';
+      ringbuf.size++;
+      ringbuf.in = (ringbuf.in +1) % 32;
+    }
     // if the buffer is empty of greater than 0
     ringbuf.data[ringbuf.in] =U0RXBUF;
     ringbuf.size++;
     ringbuf.in = (ringbuf.in +1) % 32;
     return;
-  } else if (ringbuf.size == 0){
-    ringbuf.data[ringbuf.in] = '~';
-    ringbuf.size++;
-    ringbuf.in = (ringbuf.in +1) % 32;
-    return;
-  } 
+  }  
 }
 
 // Function that checks the ringbuffer that we are using and if the size
@@ -234,6 +234,7 @@ void pop(){
 // Timer interupt
  __attribute__((interrupt(TIMERB0_VECTOR))) void timer_handler()
  {
+  
   buf_to_morse();
   switch (wait_stage){
   case 0:
