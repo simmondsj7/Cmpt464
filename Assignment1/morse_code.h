@@ -52,7 +52,7 @@ typedef struct{
     int length;
 } MorseCode;
 
-MorseCode m[38] = {{.letter = 'a', .code = ".-", .length = 2},  // 0
+MorseCode m[39] = {{.letter = 'a', .code = ".-", .length = 2},  // 0
 {.letter = 'b', .code = "-...", .length = 4},                   // 1
 {.letter = 'c', .code = "-.-.", .length = 4},                   // 2
 {.letter = 'd', .code = "-..", .length = 3},                    // 3
