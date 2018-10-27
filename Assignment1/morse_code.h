@@ -49,9 +49,12 @@ typedef struct{
 typedef struct{
     char letter; 
     char code[7];
+    int length;
 } MorseCode;
 
-MorseCode m[2] = {{.letter = 'a', .code = ".-"}, {.letter = 'b', .code = "-..."}, {.letter = 'c', .code = "-.-."}, {.letter = 'd', .code = "-.."}};
+MorseCode m[38] = {{.letter = 'a', .code = ".-", .length = 2}, \ 
+{.letter = 'b', .code = "-...", .length = 4}, \
+{.letter = 'c', .code = "-.-.", .length}, {.letter = 'd', .code = "-..", .length = 3}};
 
 MorseCode morse[s];
 Buffer ringbuf= {.in=0, .out=0, .size=0};
