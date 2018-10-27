@@ -220,8 +220,7 @@ void pop(){
     return;
   }
 
- 
-  U0TXBUF = morse_string[morse_string_index];//morse_string[morse_string_index];
+  U0TXBUF = morse_string[morse_string_index];
   morse_string_index ++; 
 }
 
@@ -236,21 +235,22 @@ void pop(){
       ringbuf.out = (ringbuf.out + 1) % 32;
 	    morse_string_index = 0;
       wait_stage = 2;
-    }  
+    } else {  
 
-    switch(morse_string[morse_string_index]){
-      case '.':
-        TBCCR0 += DOT;
-        IE1 |= UTXIE0;
-        P4OUT &= ~R;
-        wait_stage = 1;
-        break;
-      case '-':
-        TBCCR0 += DASH;
-        IE1 |= UTXIE0;
-        P4OUT &= ~R;
-        wait_stage =1;
-        break;
+      switch(morse_string[morse_string_index]){
+        case '.':
+          TBCCR0 += DOT;
+          IE1 |= UTXIE0;
+          P4OUT &= ~R;
+          wait_stage = 1;
+          break;
+        case '-':
+          TBCCR0 += DASH;
+          IE1 |= UTXIE0;
+          P4OUT &= ~R;
+          wait_stage =1;
+          break;
+        }
       }
     break;
   case 1:
