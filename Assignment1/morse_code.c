@@ -269,7 +269,7 @@ __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
 // transmit interrupt handler
 __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
 {
-    P4OUT ^= 0x02; 
+    //P4OUT ^= 0x02; 
     pop();
     if(ringbuf.size == 0){
       //TODO: Sending process should be sychronized with the led status change
