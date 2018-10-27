@@ -220,8 +220,6 @@ void pop(){
 // Timer interupt
  __attribute__((interrupt(TIMERB0_VECTOR))) void timer_handler()
  {
-   //P4OUT |= G;
-  
 	buf_to_morse();
 
   if (morse_string_index >= global_length){
@@ -234,10 +232,12 @@ void pop(){
    case '.':
      TBCCR0 += DOT;
      IE1 |= UTXIE0;
+     DOT_ON;
      break;
    case '-':
      TBCCR0 += DASH;
      IE1 |= UTXIE0;
+     DASH_ON;
      break;
   }
 }
@@ -252,9 +252,7 @@ __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
         TBCCR0 = 1;
         TBCCTL0 = CCIE; 
         TBCTL = TBSSEL_1 + CNTL_0 + MC_2 + TBCLR;
-	
     }
-  
   push();
 }
 
@@ -264,6 +262,7 @@ __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
     pop();
     if(ringbuf.size == 0){
       // SEND End of work
+      morse_string = ".-.-.-";
       //TODO: Sending process should be sychronized with the led status change
       //IE1 &= ~UTXIE0; // if there is nothing in the buffer dont transmit anything
   } 
