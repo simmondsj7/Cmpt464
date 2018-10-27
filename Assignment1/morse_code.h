@@ -23,7 +23,7 @@ do{ \
 
 #define DOT_ON \
 do{ \
-  P4OUT &= ~R;
+  P4OUT &= ~R; \
 } while(0) 
 
 #define DASH_ON \
