@@ -34,6 +34,78 @@ void buf_to_morse(){
     morse_string = m[1].code;
   case 'c':
     morse_string = m[2].code;
+  case 'd':
+    morse_string = m[3].code;
+  case 'e':
+    morse_string = m[4].code;
+  case 'f':
+    morse_string = m[5].code;
+  case 'g':
+    morse_string = m[6].code;
+  case 'h':
+    morse_string = m[7].code;
+  case 'i':
+    morse_string = m[8].code;
+  case 'j':
+    morse_string = m[9].code;
+  case 'k':
+    morse_string = m[10].code;
+  case 'l':
+    morse_string = m[11].code;
+  case 'm':
+    morse_string = m[12].code;
+  case 'n':
+    morse_string = m[13].code;
+  case 'o':
+    morse_string = m[14].code;
+  case 'p':
+    morse_string = m[15].code;
+  case 'q':
+    morse_string = m[16].code;
+  case 'r':
+    morse_string = m[17].code;
+  case 's':
+    morse_string = m[18].code;
+  case 't':
+    morse_string = m[19].code;
+  case 'u':
+    morse_string = m[20].code;
+  case 'v':
+    morse_string = m[21].code;
+  case 'w':
+    morse_string = m[22].code;
+  case 'x':
+    morse_string = m[23].code;
+  case 'y':
+    morse_string = m[24].code;
+  case 'z':
+    morse_string = m[25].code;
+  case '1':
+    morse_string = m[26].code;
+  case '2':
+    morse_string = m[27].code;
+  case '3':
+    morse_string = m[28].code;
+  case '4':
+    morse_string = m[29].code;
+  case '5':
+    morse_string = m[30].code;
+  case '6':
+    morse_string = m[31].code;
+  case '7':
+    morse_string = m[32].code;
+  case '8':
+    morse_string = m[33].code;
+  case '9':
+    morse_string = m[34].code;
+  case '0':
+    morse_string = m[35].code;
+  case '.':
+    morse_string = m[36].code;
+  case '@':
+    morse_string = m[37].code;
+  case '~':
+    morse_string = m[38].code;
   }
 }
 
