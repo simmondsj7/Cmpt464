@@ -227,7 +227,6 @@ void pop(){
       ringbuf.out = (ringbuf.out + 1) % 32;
 	    morse_string_index = 0;
       // wait for 120 ms
-      wait_stage = 1;
     }  
 
     switch(morse_string[morse_string_index]){
@@ -235,15 +234,19 @@ void pop(){
         TBCCR0 += DOT;
         IE1 |= UTXIE0;
         P4OUT &= ~R;
+        wait_stage = 1;
         break;
       case '-':
         TBCCR0 += DASH;
         IE1 |= UTXIE0;
         P4OUT &= ~R;
+        wait_stage =1;
         break;
       }
   } else {
+    TBCCR0 += DOT;
     P4OUT |= R;
+    wait_stage = 0;
   }
 }
 
