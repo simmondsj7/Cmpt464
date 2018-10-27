@@ -252,18 +252,22 @@ void pop(){
         wait_stage =1;
         break;
       }
+    break;
   case 1:
     TBCCR0 += DOT;
     P4OUT |= R;
     wait_stage = 0;
+    break;
   case 2:
     TBCCR0 += LETTER_SPACE;
     P4OUT |= R;
     wait_stage = 0; 
+    break;
   case 3:
     TBCCR0 += WORD_SPACE;
     P4OUT |= R;
     wait_stage = 0;
+    break;
   }
 
   
