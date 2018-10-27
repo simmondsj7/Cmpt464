@@ -232,7 +232,7 @@ void pop(){
       ringbuf.size--;
       ringbuf.out = (ringbuf.out + 1) % 32;
 	    morse_string_index = 0;
-      end_of_letter = 1;
+      wait_stage = 1;
     }  
 
     switch(morse_string[morse_string_index]){
