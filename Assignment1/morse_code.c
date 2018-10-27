@@ -16,6 +16,7 @@ char *morse_string;
 // start the index at the beginning of the string
 int morse_string_index = 0;
 int global_length = 0;
+int wait_stage = 0;
 
 uint8_t idle_flag;
 
@@ -219,23 +220,30 @@ void pop(){
 // Timer interupt
  __attribute__((interrupt(TIMERB0_VECTOR))) void timer_handler()
  {
-	buf_to_morse();
+  if (wait_stage == 0){
+	  buf_to_morse();
+    if (morse_string_index >= global_length){
+      ringbuf.size--;
+      ringbuf.out = (ringbuf.out + 1) % 32;
+	    morse_string_index = 0;
+      // wait for 120 ms
+      wait_stage = 1;
+    }  
 
-  if (morse_string_index >= global_length){
-    ringbuf.size--;
-    ringbuf.out = (ringbuf.out + 1) % 32;
-	  morse_string_index = 0;
-  }
-
-  switch(morse_string[morse_string_index]){
-   case '.':
-     TBCCR0 += DOT;
-     IE1 |= UTXIE0;
-     break;
-   case '-':
-     TBCCR0 += DASH;
-     IE1 |= UTXIE0;
-     break;
+    switch(morse_string[morse_string_index]){
+      case '.':
+        TBCCR0 += DOT;
+        IE1 |= UTXIE0;
+        P4OUT &= ~R;
+        break;
+      case '-':
+        TBCCR0 += DASH;
+        IE1 |= UTXIE0;
+        P4OUT &= ~R;
+        break;
+      }
+  } else {
+    P4OUT |= R;
   }
 }
 
@@ -259,7 +267,7 @@ __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
     pop();
     if(ringbuf.size == 0){
       // SEND End of work
-      morse_string = ".-.-.-";
+      //morse_string = ".-.-.-";
       //TODO: Sending process should be sychronized with the led status change
       //IE1 &= ~UTXIE0; // if there is nothing in the buffer dont transmit anything
   } 
