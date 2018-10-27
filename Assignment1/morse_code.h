@@ -52,42 +52,42 @@ typedef struct{
 MorseCode m[40] = {{.letter = 'a', .code = ".- ", .length = 3},  // 0
 {.letter = 'b', .code = "-... ", .length = 5},                   // 1
 {.letter = 'c', .code = "-.-. ", .length = 5},                   // 2
-{.letter = 'd', .code = "-..", .length = 3},                    // 3
+{.letter = 'd', .code = "-.. ", .length = 4},                    // 3
 {.letter = 'e', .code = ". ", .length = 2},                      // 4
-{.letter = 'f', .code = "..-.", .length = 4},                   // 5
-{.letter = 'g', .code = "--.", .length = 3},                    // 6
+{.letter = 'f', .code = "..-. ", .length = 5},                   // 5
+{.letter = 'g', .code = "--. ", .length = 4},                    // 6
 {.letter = 'h', .code = ".... ", .length = 5},                   // 7
-{.letter = 'i', .code = "..", .length = 2},                     // 8
-{.letter = 'j', .code = ".---", .length = 4},                   // 9
-{.letter = 'k', .code = "-.-", .length = 3},                    // 10
+{.letter = 'i', .code = ".. ", .length = 3},                     // 8
+{.letter = 'j', .code = ".--- ", .length = 5},                   // 9
+{.letter = 'k', .code = "-.- ", .length = 4},                    // 10
 {.letter = 'l', .code = ".-.. ", .length = 5},                   // 11
-{.letter = 'm', .code = "--", .length = 2},                     // 12
-{.letter = 'n', .code = "-.", .length = 2},                     // 13
+{.letter = 'm', .code = "-- ", .length = 3},                     // 12
+{.letter = 'n', .code = "-. ", .length = 3},                     // 13
 {.letter = 'o', .code = "--- ", .length = 4},                    // 14
-{.letter = 'p', .code = ".--.", .length = 4},                   // 15
-{.letter = 'q', .code = "--.-", .length = 4},                   // 16
-{.letter = 'r', .code = ".-.", .length = 3},                    // 17
-{.letter = 's', .code = "...", .length = 3},                    // 18
-{.letter = 't', .code = "-", .length = 1},                      // 19
-{.letter = 'u', .code = "..-", .length = 3},                    // 20
-{.letter = 'v', .code = "...-", .length = 4},                   // 21
-{.letter = 'w', .code = ".--", .length = 3},                    // 22
-{.letter = 'x', .code = "-..-", .length = 4},                   // 23
-{.letter = 'y', .code = "-.--", .length = 4},                   // 24
-{.letter = 'z', .code = "--..", .length = 4},                   // 25
-{.letter = '1', .code = ".----", .length = 5},                  // 26
-{.letter = '2', .code = "..---", .length = 5},                  // 27
-{.letter = '3', .code = "...--", .length = 5},                  // 28
-{.letter = '4', .code = "....-", .length = 5},                  // 29
-{.letter = '5', .code = ".....", .length = 5},                  // 30
-{.letter = '6', .code = "-....", .length = 5},                  // 31
-{.letter = '7', .code = "--...", .length = 5},                  // 32
-{.letter = '8', .code = "---..", .length = 5},                  // 33
-{.letter = '9', .code = "----.", .length = 5},                  // 34
-{.letter = '0', .code = "-----", .length = 5},                  // 35
-{.letter = '.', .code = ".-.-.-", .length = 6},                 // 36 - Full stop
-{.letter = '@', .code = "...-.-", .length = 6},                 // 37 - End of Work
-{.letter = '~', .code = "-.-.-", .length = 3},                 // 38 - Starting Signal
+{.letter = 'p', .code = ".--. ", .length = 5},                   // 15
+{.letter = 'q', .code = "--.- ", .length = 5},                   // 16
+{.letter = 'r', .code = ".-. ", .length = 4},                    // 17
+{.letter = 's', .code = "... ", .length = 4},                    // 18
+{.letter = 't', .code = "- ", .length = 2},                      // 19
+{.letter = 'u', .code = "..- ", .length = 4},                    // 20
+{.letter = 'v', .code = "...- ", .length = 5},                   // 21
+{.letter = 'w', .code = ".-- ", .length = 4},                    // 22
+{.letter = 'x', .code = "-..- ", .length = 5},                   // 23
+{.letter = 'y', .code = "-.-- ", .length = 5},                   // 24
+{.letter = 'z', .code = "--.. ", .length = 5},                   // 25
+{.letter = '1', .code = ".---- ", .length = 6},                  // 26
+{.letter = '2', .code = "..--- ", .length = 6},                  // 27
+{.letter = '3', .code = "...-- ", .length = 6},                  // 28
+{.letter = '4', .code = "....- ", .length = 6},                  // 29
+{.letter = '5', .code = "..... ", .length = 6},                  // 30
+{.letter = '6', .code = "-.... ", .length = 6},                  // 31
+{.letter = '7', .code = "--... ", .length = 6},                  // 32
+{.letter = '8', .code = "---.. ", .length = 6},                  // 33
+{.letter = '9', .code = "----. ", .length = 6},                  // 34
+{.letter = '0', .code = "----- ", .length = 6},                  // 35
+{.letter = '.', .code = ".-.-.- ", .length = 7},                 // 36 - Full stop
+{.letter = '@', .code = "...-.- ", .length = 7},                 // 37 - End of Work
+{.letter = '~', .code = "-.-.- ", .length = 6},                 // 38 - Starting Signal
 {.letter = ' ', .code = " ", .length = 1}};
 
 MorseCode morse[s];
