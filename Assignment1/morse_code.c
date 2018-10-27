@@ -16,7 +16,6 @@ char *morse_string;
 // start the index at the beginning of the string
 int morse_string_index = 0;
 int global_length = 0;
-int start_transmit = 0; 
 int end_transmit = 0;
 int wait_stage = 0; // 1 is between DOT or dash in morse
                     // 2 is between Letters
@@ -199,10 +198,7 @@ void buf_to_morse(){
 
 void push(){
 // max size that im allowing. if the buffer is full do nothing
-  if(ringbuf.size==31){
-    ringbuf.data[ringbuf.in] ='@';
-    ringbuf.size++;
-    ringbuf.in = (ringbuf.in +1) % 32;
+  if(ringbuf.size==32){
     return;
   }else if(ringbuf.size>=0){
     if (ringbuf.size == 0){
@@ -223,8 +219,13 @@ void push(){
 // character that is in the buffer, see if the character is 
 void pop(){
   if(ringbuf.size==0) {
+    ringbuf.data[ringbuf.in] ='@';
+    ringbuf.size++;
+    ringbuf.in = (ringbuf.in +1) % 32;
     // turns clock off
-    TBCTL = MC_0;
+    if (end_transmit == 1){
+      TBCTL = MC_0;
+    }
     return;
   }
   U0TXBUF = morse_string[morse_string_index];
@@ -234,7 +235,6 @@ void pop(){
 // Timer interupt
  __attribute__((interrupt(TIMERB0_VECTOR))) void timer_handler()
  {
-  
   buf_to_morse();
   switch (wait_stage){
   case 0:
@@ -300,6 +300,7 @@ __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
 { 
     pop();
     if(ringbuf.size == 0){
+      end_transmit = 1;
       // SEND End of work
       //morse_string = ".-.-.-";
       //TODO: Sending process should be sychronized with the led status change
