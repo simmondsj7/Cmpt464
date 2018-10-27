@@ -220,7 +220,7 @@ void pop(){
  __attribute__((interrupt(TIMERB0_VECTOR))) void timer_handler()
  {
    P4OUT |= G;
- if (morse_string_index >= global_length){
+ if (morse_string_index >= 2){
     ringbuf.size--;
     ringbuf.out = (ringbuf.out + 1) % 32;
 	  DOT_ON;
