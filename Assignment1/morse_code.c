@@ -143,10 +143,10 @@ void pop(){
  {
 IE1 |= UTXIE0;
  if (morse_string_index >= 2){
-     ringbuf.size--;
-     ringbuf.out = (ringbuf.out + 1) % 32;
-	DOT_ON;
-	morse_string_index = 0;
+    ringbuf.size--;
+    ringbuf.out = (ringbuf.out + 1) % 32;
+	  DOT_ON;
+	  morse_string_index = 0;
 }
 	buf_to_morse();
     
