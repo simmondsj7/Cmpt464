@@ -220,6 +220,7 @@ void push(){
 void pop(){
   if(ringbuf.size==0) {
     if (end_transmit == 1){
+      P4OUT |= R;
       TBCTL = MC_0;
     }
     ringbuf.data[ringbuf.in] ='@';
