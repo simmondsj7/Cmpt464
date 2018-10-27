@@ -266,6 +266,7 @@ void pop(){
   case 3:
     TBCCR0 += WORD_SPACE;
     P4OUT |= R;
+    P4OUT &= G;
     wait_stage = 0;
     break;
   }
