@@ -221,13 +221,15 @@ void pop(){
  __attribute__((interrupt(TIMERB0_VECTOR))) void timer_handler()
  {
    //P4OUT |= G;
-  if (morse_string_index >= 2){
+  
+	buf_to_morse();
+
+  if (morse_string_index >= global_length){
     ringbuf.size--;
     ringbuf.out = (ringbuf.out + 1) % 32;
 	  morse_string_index = 0;
   }
 
-	buf_to_morse();
   switch(morse_string[morse_string_index]){
    case '.':
      TBCCR0 += DOT;
