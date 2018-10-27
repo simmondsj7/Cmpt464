@@ -203,7 +203,6 @@ void push(){
     ringbuf.data[ringbuf.in] = '@';
     ringbuf.size++;
     ringbuf.in = (ringbuf.in +1) % 32;
-    return
     return;
   }else if(ringbuf.size>0){
     // if the buffer is empty of greater than 0
@@ -235,9 +234,6 @@ void pop(){
 // Timer interupt
  __attribute__((interrupt(TIMERB0_VECTOR))) void timer_handler()
  {
-  if (start_transmit = 1){
-
-  }
   buf_to_morse();
   switch (wait_stage){
   case 0:
