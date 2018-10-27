@@ -235,9 +235,6 @@ void pop(){
      TBCCR0 += DOT;
      IE1 |= UTXIE0;
      break;
-    
-
-	break;
    case '-':
      TBCCR0 += DASH;
      IE1 |= UTXIE0;
