@@ -187,10 +187,10 @@ void buf_to_morse(){
     morse_string = m[38].code;
     global_length = m[38].length;
     break;
-  }
   case ' ':
     wait_stage = 3;
     break;
+  }
 }
 
 
