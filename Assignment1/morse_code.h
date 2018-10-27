@@ -54,7 +54,8 @@ typedef struct{
 
 MorseCode m[38] = {{.letter = 'a', .code = ".-", .length = 2},  
 {.letter = 'b', .code = "-...", .length = 4}, 
-{.letter = 'c', .code = "-.-.", .length}, {.letter = 'd', .code = "-..", .length = 3}};
+{.letter = 'c', .code = "-.-.", .length = 4}, 
+{.letter = 'd', .code = "-..", .length = 3}};
 
 MorseCode morse[s];
 Buffer ringbuf= {.in=0, .out=0, .size=0};
