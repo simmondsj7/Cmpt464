@@ -88,7 +88,7 @@ MorseCode m[40] = {{.letter = 'a', .code = ".- ", .length = 3},  // 0
 {.letter = '.', .code = ".-.-.-", .length = 6},                 // 36 - Full stop
 {.letter = '@', .code = "...-.-", .length = 6},                 // 37 - End of Work
 {.letter = '~', .code = "-.-.-", .length = 3},                 // 38 - Starting Signal
-{.letter = ' ', .code = " ", .length = 2}};
+{.letter = ' ', .code = " ", .length = 1}};
 
 MorseCode morse[s];
 Buffer ringbuf= {.in=0, .out=0, .size=0};
