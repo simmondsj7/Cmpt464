@@ -52,8 +52,8 @@ typedef struct{
     int length;
 } MorseCode;
 
-MorseCode m[38] = {{.letter = 'a', .code = ".-", .length = 2}, \ 
-{.letter = 'b', .code = "-...", .length = 4}, \
+MorseCode m[38] = {{.letter = 'a', .code = ".-", .length = 2},  
+{.letter = 'b', .code = "-...", .length = 4}, 
 {.letter = 'c', .code = "-.-.", .length}, {.letter = 'd', .code = "-..", .length = 3}};
 
 MorseCode morse[s];
