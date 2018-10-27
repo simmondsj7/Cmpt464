@@ -51,7 +51,7 @@ typedef struct{
     char code[7];
 } MorseCode;
 
-MorseCode m[2] = {{.letter = 'a', .code = ".-"}, {.letter = 'b', .code = "_..."}};
+MorseCode m[2] = {{.letter = 'a', .code = ".-"}, {.letter = 'b', .code = "-..."}, {.letter = 'c', .code = "-.-."}, {.letter = 'd', .code = "-.."}};
 
 MorseCode morse[s];
 Buffer ringbuf= {.in=0, .out=0, .size=0};

@@ -31,9 +31,10 @@ void buf_to_morse(){
     morse_string = m[0].code;
      break;
   case 'b':
-    morse_string = m[1].code;      
-}
-
+    morse_string = m[1].code;
+  case 'c':
+    morse_string = m[2].code;
+  }
 }
 
 
