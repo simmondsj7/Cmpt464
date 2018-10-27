@@ -189,9 +189,8 @@ void buf_to_morse(){
     break;
   // if you encounter a space as input
   case ' ':
-    morse_string = "  ";
-    global_length = 2;
-    wait_stage = 3;
+    morse_string = m[39].code;
+    global_length = m[39].length;
     break;
   }
 }
@@ -254,7 +253,7 @@ void pop(){
           TBCCR0 += DASH;
           IE1 |= UTXIE0;
           P4OUT |= R;
-          wait_stage = 0;
+          wait_stage = 3;
         }
       }
     break;

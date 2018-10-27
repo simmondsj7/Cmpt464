@@ -51,19 +51,19 @@ typedef struct{
 
 MorseCode m[40] = {{.letter = 'a', .code = ".- ", .length = 3},  // 0
 {.letter = 'b', .code = "-... ", .length = 5},                   // 1
-{.letter = 'c', .code = "-.-.", .length = 4},                   // 2
+{.letter = 'c', .code = "-.-. ", .length = 5},                   // 2
 {.letter = 'd', .code = "-..", .length = 3},                    // 3
-{.letter = 'e', .code = ".", .length = 1},                      // 4
+{.letter = 'e', .code = ". ", .length = 2},                      // 4
 {.letter = 'f', .code = "..-.", .length = 4},                   // 5
 {.letter = 'g', .code = "--.", .length = 3},                    // 6
-{.letter = 'h', .code = "....", .length = 4},                   // 7
+{.letter = 'h', .code = ".... ", .length = 5},                   // 7
 {.letter = 'i', .code = "..", .length = 2},                     // 8
 {.letter = 'j', .code = ".---", .length = 4},                   // 9
 {.letter = 'k', .code = "-.-", .length = 3},                    // 10
-{.letter = 'l', .code = ".-..", .length = 4},                   // 11
+{.letter = 'l', .code = ".-.. ", .length = 5},                   // 11
 {.letter = 'm', .code = "--", .length = 2},                     // 12
 {.letter = 'n', .code = "-.", .length = 2},                     // 13
-{.letter = 'o', .code = "---", .length = 3},                    // 14
+{.letter = 'o', .code = "--- ", .length = 4},                    // 14
 {.letter = 'p', .code = ".--.", .length = 4},                   // 15
 {.letter = 'q', .code = "--.-", .length = 4},                   // 16
 {.letter = 'r', .code = ".-.", .length = 3},                    // 17
@@ -87,7 +87,8 @@ MorseCode m[40] = {{.letter = 'a', .code = ".- ", .length = 3},  // 0
 {.letter = '0', .code = "-----", .length = 5},                  // 35
 {.letter = '.', .code = ".-.-.-", .length = 6},                 // 36 - Full stop
 {.letter = '@', .code = "...-.-", .length = 6},                 // 37 - End of Work
-{.letter = '~', .code = "-.-.-", .length = 3}};                 // 38 - Starting Signal
+{.letter = '~', .code = "-.-.-", .length = 3},                 // 38 - Starting Signal
+{.letter = ' ', .code = " ", .length = 2}};
 
 MorseCode morse[s];
 Buffer ringbuf= {.in=0, .out=0, .size=0};
