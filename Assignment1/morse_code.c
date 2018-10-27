@@ -255,6 +255,7 @@ void pop(){
           IE1 |= UTXIE0;
           P4OUT |= R;
           wait_stage = 0;
+          break;
         }
       }
     break;
