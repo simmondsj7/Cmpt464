@@ -6,10 +6,10 @@
 
 #define PERIOD 32768 //Number of clock cycles in one second
 
-#define WORD_SPACE (uint16_t)(PERIOD)*(0.840)*5 // 840ms for space bewtween words
-#define LETTER_SPACE (uint16_t)(PERIOD)*(0.360)*5 // 360ms for space between letters
-#define DASH (uint16_t)(PERIOD)*(0.360)*5 // 360ms for Dash Period
-#define DOT (uint16_t)(PERIOD)*(0.120)*5 // 120ms for Dot Period
+#define WORD_SPACE (uint16_t)(PERIOD)*(4) // 840ms for space bewtween words
+#define LETTER_SPACE (uint16_t)(PERIOD)*(2) // 360ms for space between letters
+#define DASH (uint16_t)(PERIOD)*(2) // 360ms for Dash Period
+#define DOT (uint16_t)(PERIOD)*(1) // 120ms for Dot Period
 
 //init all of the LEDs to be off
 #define LED_INIT \

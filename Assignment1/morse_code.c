@@ -187,7 +187,10 @@ void buf_to_morse(){
     morse_string = m[38].code;
     global_length = m[38].length;
     break;
+  // if you encounter a space as input
   case ' ':
+    morse_string = "  ";
+    global_length = 2;
     wait_stage = 3;
     break;
   }
