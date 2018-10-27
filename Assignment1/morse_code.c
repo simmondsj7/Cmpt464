@@ -29,7 +29,6 @@ uint8_t first_character_flag =0;
 void buf_to_morse(){
   switch (ringbuf.data[ringbuf.out]){
   case 'a':
-    P4OUT &= 0x02;
     morse_string = m[0].code;
     global_length = m[0].length;
     break;
@@ -232,12 +231,10 @@ void pop(){
    case '.':
      TBCCR0 += DOT;
      IE1 |= UTXIE0;
-     DOT_ON;
      break;
    case '-':
      TBCCR0 += DASH;
      IE1 |= UTXIE0;
-     DASH_ON;
      break;
   }
 }
