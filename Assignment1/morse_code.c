@@ -250,6 +250,11 @@ void pop(){
           P4OUT &= ~R;
           wait_stage =1;
           break;
+        case ' ':
+          TBCCR0 += DASH;
+          IE1 |= UTXIE0;
+          P4OUT |= R;
+          wait_stage = 0;
         }
       }
     break;
@@ -266,7 +271,6 @@ void pop(){
   case 3:
     TBCCR0 += WORD_SPACE;
     P4OUT |= R;
-    P4OUT &= G;
     wait_stage = 0;
     break;
   }
