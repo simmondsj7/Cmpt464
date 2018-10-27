@@ -219,13 +219,13 @@ void push(){
 // character that is in the buffer, see if the character is 
 void pop(){
   if(ringbuf.size==0) {
+    if (end_transmit == 1){
+      TBCTL = MC_0;
+    }
     ringbuf.data[ringbuf.in] ='@';
     ringbuf.size++;
     ringbuf.in = (ringbuf.in +1) % 32;
     // turns clock off
-    if (end_transmit == 1){
-      TBCTL = MC_0;
-    }
     return;
   }
   U0TXBUF = morse_string[morse_string_index];
