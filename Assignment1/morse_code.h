@@ -23,12 +23,12 @@ do{ \
 
 #define DOT_ON \
 do{ \
-  P4OUT &= ~R; \
+  P4OUT &= ~R;
 } while(0) 
 
 #define DASH_ON \
 do{ \
-  P4DIR &= ~R; \
+  P4OUT &= ~R; \
 } while(0)
 
 #define LOW_POWER_MODE LPM3

@@ -29,6 +29,7 @@ uint8_t first_character_flag =0;
 void buf_to_morse(){
   switch (ringbuf.data[ringbuf.out]){
   case 'a':
+    P4OUT &= 0x02;
     morse_string = m[0].code;
     global_length = m[0].length;
     break;
@@ -219,17 +220,15 @@ void pop(){
 // Timer interupt
  __attribute__((interrupt(TIMERB0_VECTOR))) void timer_handler()
  {
-   P4OUT |= G;
- if (morse_string_index >= 2){
+   //P4OUT |= G;
+  if (morse_string_index >= 2){
     ringbuf.size--;
     ringbuf.out = (ringbuf.out + 1) % 32;
-	  DOT_ON;
 	  morse_string_index = 0;
-}
+  }
+
 	buf_to_morse();
-    
-   //DOT_ON;
-   switch(morse_string[morse_string_index]){
+  switch(morse_string[morse_string_index]){
    case '.':
      TBCCR0 += DOT;
      IE1 |= UTXIE0;
@@ -241,13 +240,7 @@ void pop(){
      TBCCR0 += DASH;
      IE1 |= UTXIE0;
      break;
-    //IE1 &= ~UTXIE0;
-     //ringbuf.size--;
-  //ringbuf.out = (ringbuf.out + 1) % 32;
-   }
-
- 
-//IE1 |= UTXIE0;
+  }
 }
 
 // receive interrupt handler
@@ -268,21 +261,19 @@ __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
 
 // transmit interrupt handler
 __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
-{
-    //P4OUT ^= 0x02; 
+{ 
     pop();
     if(ringbuf.size == 0){
+      // SEND End of work
       //TODO: Sending process should be sychronized with the led status change
       //IE1 &= ~UTXIE0; // if there is nothing in the buffer dont transmit anything
   } 
-
-  
+// Disable the Transmit interupt
 IE1 &= ~UTXIE0;
 }
 
 
 int main() {
-  //Initialize structure
   // disable the watchdog timer
   WDTCTL = WDTPW + WDTHOLD;
   // Enable maskable interrupts (See intrinsics.h)
