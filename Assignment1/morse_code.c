@@ -16,7 +16,9 @@ char *morse_string;
 // start the index at the beginning of the string
 int morse_string_index = 0;
 int global_length = 0;
-int wait_stage = 0;
+int wait_stage = 0; // 1 is between DOT or dash in morse
+                    // 2 is between Letters
+                    // 3 is between Word
 
 uint8_t idle_flag;
 
@@ -186,6 +188,9 @@ void buf_to_morse(){
     global_length = m[38].length;
     break;
   }
+  case ' ':
+    wait_stage = 3;
+    break;
 }
 
 
@@ -220,13 +225,14 @@ void pop(){
 // Timer interupt
  __attribute__((interrupt(TIMERB0_VECTOR))) void timer_handler()
  {
-  if (wait_stage == 0){
-	  buf_to_morse();
+  buf_to_morse();
+  switch (wait_stage){
+  case 0:
     if (morse_string_index >= global_length){
       ringbuf.size--;
       ringbuf.out = (ringbuf.out + 1) % 32;
 	    morse_string_index = 0;
-      // wait for 120 ms
+      end_of_letter = 1;
     }  
 
     switch(morse_string[morse_string_index]){
@@ -243,11 +249,21 @@ void pop(){
         wait_stage =1;
         break;
       }
-  } else {
+  case 1:
     TBCCR0 += DOT;
     P4OUT |= R;
     wait_stage = 0;
+  case 2:
+    TBCCR0 += LETTER_SPACE;
+    P4OUT |= R;
+    wait_stage = 0; 
+  case 3:
+    TBCCR0 += WORD_SPACE;
+    P4OUT |= R;
+    wait_stage = 0;
   }
+
+  
 }
 
 // receive interrupt handler
