@@ -87,7 +87,7 @@ MorseCode m[40] = {{.letter = 'a', .code = ".- ", .length = 3},  // 0
 {.letter = '0', .code = "----- ", .length = 6},                  // 35
 {.letter = '.', .code = ".-.-.- ", .length = 7},                 // 36 - Full stop
 {.letter = '@', .code = "...-.- ", .length = 7},                 // 37 - End of Work
-{.letter = '~', .code = "-.-.- ", .length = 6},                 // 38 - Starting Signal
+{.letter = '~', .code = "-.-.- ", .length = 6},                  // 38 - Starting Signal
 {.letter = ' ', .code = " ", .length = 1}};
 
 MorseCode morse[s];
