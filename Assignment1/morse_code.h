@@ -7,7 +7,7 @@
 #define PERIOD 32768 //Number of clock cycles in one second
 
 #define WORD_SPACE (uint16_t)(PERIOD)*(0.840) // 840ms for space bewtween words
-#define LETTER_SPACE (uint16_t)(PERIOD)*(0.360) // 360ms for space between letters
+#define LETTER_SPACE (uint16_t)(PERIOD)*(0.240) // 240ms for space between letters because whatever came before already waited for 120ms
 #define DASH (uint16_t)(PERIOD)*(0.360) // 360ms for Dash Period
 #define DOT (uint16_t)(PERIOD)*(0.120) // 120ms for Dot Period
 

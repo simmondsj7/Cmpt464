@@ -219,20 +219,17 @@ void push(){
 // character that is in the buffer, see if the character is 
 void pop(){
   if(ringbuf.size==0) {
-    /*
-    if (end_transmit == 1){
-      P4OUT |= R;
-      TIMER_OFF;
-    }
-    */
     ringbuf.data[ringbuf.in] ='@';
     ringbuf.size++;
     ringbuf.in = (ringbuf.in +1) % 32;
     wait_stage = 0;
     return;
-  }
-  U0TXBUF = morse_string[morse_string_index];
-  morse_string_index ++; 
+  } else if (ringbuf.size > 0 && ringbuf.size <= 32){
+      U0TXBUF = morse_string[morse_string_index];
+      morse_string_index ++; 
+      ringbuf.size--;
+      ringbuf.out = (ringbuf.out + 1) % 32;
+    }
 }
 
 // Timer interupt
@@ -242,8 +239,6 @@ void pop(){
   switch (wait_stage){
   case 0:
     if (morse_string_index >= global_length){
-      ringbuf.size--;
-      ringbuf.out = (ringbuf.out + 1) % 32;
 	    morse_string_index = 0;
       wait_stage = 2;
     } else {  
@@ -254,37 +249,37 @@ void pop(){
           TBCCR0 += DOT;   // add 120 ms to TBCCR0
           IE1 |= UTXIE0;   // enable UART transmit interupts
           P4OUT &= ~R;     // Turn Red led on
-          wait_stage = 0; 
+          wait_stage = 1;  // Go wait for 120ms and turn Red led off
           break;
         case '-':
          // Morse Code is a DASH output dash for 360 ms and
-          TBCCR0 += DASH;
-          IE1 |= UTXIE0;
-          P4OUT &= ~R;
-          wait_stage =0;
+          TBCCR0 += DASH; // add 360ms to TBCCR0
+          IE1 |= UTXIE0;  // enable UART transmit interupts 
+          P4OUT &= ~R;    // Turn Red led on
+          wait_stage =1;  // Go wait for 120ms and turn Red led off
           break;
         case ' ':
-          TBCCR0 += WORD_SPACE;
-          IE1 |= UTXIE0;
-          P4OUT |= R;
+          TBCCR0 += WORD_SPACE; // Wait for 840ms between 2 words
+          IE1 |= UTXIE0;        // enable UART transmit interupts
+          P4OUT |= R;           // turn off the Red led
           break;
         case '@':
-          TBCCR0 += WORD_SPACE;
-          IE1 |= UTXIE0;
-          P4OUT |= R;
+          TBCCR0 += WORD_SPACE; // Wait for 840ms at the end
+          IE1 |= UTXIE0;        // enable UART transmit for the end of work
+          P4OUT |= R;           // turns off the Red led
           break;
         }
       }
     break;
   case 1:
-    TBCCR0 += DOT;
-    P4OUT |= R;
-    wait_stage = 0;
+    TBCCR0 += DOT;            // space between the signals forming the same letter
+    P4OUT |= R;               // turn off the Red led
+    wait_stage = 0;           // Go back to the normal state
     break;
   case 2:
-    TBCCR0 += LETTER_SPACE;
-    P4OUT |= R;
-    wait_stage = 0; 
+    TBCCR0 += LETTER_SPACE;   // space between two letters 
+    P4OUT |= R;               // turn off the Red led
+    wait_stage = 0;           // Go back to the normal state
     break;
   }
 
