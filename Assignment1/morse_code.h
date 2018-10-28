@@ -28,6 +28,13 @@ do{ \
   P4OUT &= ~R; \
 } while(0)
 
+#define TIMER_ON do{ \
+TBCTL = TBCLR; /*This resets the timer after turning it on*/\
+TBCCR0 = 1; \
+TBCCTL0 =  CCIE;	\
+TBCTL = TBSSEL_1 + MC_2;		\
+}while(0)
+
 #define LOW_POWER_MODE LPM3
 
 //selecting peripheral mode

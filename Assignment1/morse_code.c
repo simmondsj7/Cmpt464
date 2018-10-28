@@ -289,10 +289,7 @@ __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
   if(ringbuf.size == 32) { // if ringbuf size is full do nothing
     return;
   } else if (ringbuf.size == 0) {
-        TBCTL = TBCLR; /*reset timer after turning it on */
-        TBCCR0 = 1;
-        TBCCTL0 = CCIE; 
-        TBCTL = TBSSEL_1  + MC_2;
+        TIMER_ON;
     }
   push();
 }
