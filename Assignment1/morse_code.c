@@ -224,12 +224,12 @@ void pop(){
     ringbuf.in = (ringbuf.in +1) % 32;
     wait_stage = 0;
     return;
-  } else if (ringbuf.size > 0 && ringbuf.size <= 32){
-      U0TXBUF = morse_string[morse_string_index];
-      morse_string_index ++; 
-      ringbuf.size--;
-      ringbuf.out = (ringbuf.out + 1) % 32;
-    }
+  } 
+  U0TXBUF = morse_string[morse_string_index];
+  morse_string_index ++; 
+  ringbuf.size--;
+  ringbuf.out = (ringbuf.out + 1) % 32;
+    
 }
 
 // Timer interupt
