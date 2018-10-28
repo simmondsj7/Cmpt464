@@ -7,5 +7,8 @@ Image:
 UART:
 	$(CC) $(CFLAGS) -o Image UART_excercise2.c
 
+Sample:
+	$(CC) $(CFLAGS) -o Image Mohammad_Sample.c
+
 Clean:
 	rm -f Image
