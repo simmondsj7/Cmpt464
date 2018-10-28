@@ -251,16 +251,17 @@ void pop(){
       switch(morse_string[morse_string_index]){
         case '.':
           // when the morse_code is outputing a dot wait 120 ms and transmit DOT
-          TBCCR0 += DOT;
-          IE1 |= UTXIE0;
-          P4OUT &= ~R;
-          wait_stage = 1;
+          TBCCR0 += DOT;   // add 120 ms to TBCCR0
+          IE1 |= UTXIE0;   // enable UART transmit interupts
+          P4OUT &= ~R;     // Turn Red led on
+          wait_stage = 0; 
           break;
         case '-':
+         // Morse Code is a DASH output dash for 360 ms and
           TBCCR0 += DASH;
           IE1 |= UTXIE0;
           P4OUT &= ~R;
-          wait_stage =2;
+          wait_stage =0;
           break;
         case ' ':
           TBCCR0 += WORD_SPACE;
