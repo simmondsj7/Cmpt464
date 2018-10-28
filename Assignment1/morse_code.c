@@ -221,12 +221,11 @@ void pop(){
   if(ringbuf.size==0) {
     if (end_transmit == 1){
       P4OUT |= R;
-      TBCTL = MC_0;
+      TIMER_OFF;
     }
     ringbuf.data[ringbuf.in] ='@';
     ringbuf.size++;
     ringbuf.in = (ringbuf.in +1) % 32;
-    // turns clock off
     return;
   }
   U0TXBUF = morse_string[morse_string_index];
@@ -303,10 +302,10 @@ __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
       // SEND End of work
       //morse_string = ".-.-.-";
       //TODO: Sending process should be sychronized with the led status change
-      //IE1 &= ~UTXIE0; // if there is nothing in the buffer dont transmit anything
-  } 
+      IE1 &= ~UTXIE0; // if there is nothing in the buffer dont transmit anything
+    } 
 // Disable the Transmit interupt
-IE1 &= ~UTXIE0;
+    IE1 &= ~UTXIE0;
 }
 
 

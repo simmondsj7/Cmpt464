@@ -35,6 +35,13 @@ TBCCTL0 =  CCIE;	\
 TBCTL = TBSSEL_1 + MC_2;		\
 }while(0)
 
+//Turn OFF timer
+#define TIMER_OFF do{ \
+TBCCTL0 &=  ~CCIE; \
+TBCTL = MC_0; /*Shut down the timer */ \
+\
+}while(0)
+
 #define LOW_POWER_MODE LPM3
 
 //selecting peripheral mode
