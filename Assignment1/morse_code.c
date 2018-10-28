@@ -219,13 +219,16 @@ void push(){
 // character that is in the buffer, see if the character is 
 void pop(){
   if(ringbuf.size==0) {
+    /*
     if (end_transmit == 1){
       P4OUT |= R;
       TIMER_OFF;
     }
+    */
     ringbuf.data[ringbuf.in] ='@';
     ringbuf.size++;
     ringbuf.in = (ringbuf.in +1) % 32;
+    wait_stage = 0;
     return;
   }
   U0TXBUF = morse_string[morse_string_index];
@@ -247,6 +250,7 @@ void pop(){
 
       switch(morse_string[morse_string_index]){
         case '.':
+          // when the morse_code is outputing a dot wait 120 ms and transmit DOT
           TBCCR0 += DOT;
           IE1 |= UTXIE0;
           P4OUT &= ~R;
@@ -256,9 +260,14 @@ void pop(){
           TBCCR0 += DASH;
           IE1 |= UTXIE0;
           P4OUT &= ~R;
-          wait_stage =1;
+          wait_stage =2;
           break;
         case ' ':
+          TBCCR0 += WORD_SPACE;
+          IE1 |= UTXIE0;
+          P4OUT |= R;
+          break;
+        case '@':
           TBCCR0 += WORD_SPACE;
           IE1 |= UTXIE0;
           P4OUT |= R;
