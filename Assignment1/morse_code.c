@@ -235,11 +235,12 @@ void pop(){
       ringbuf.out = (ringbuf.out + 1) % 32;
 	    morse_string_index = 0;
       wait_stage = 2;
-      if (ringbuf.size == 0 ){
-        ringbuf.data[ringbuf.in] ='@';
-        ringbuf.size++;
-        ringbuf.in = (ringbuf.in +1) % 32;
-        wait_stage = 0;
+      if (ringbuf.size == 0 ){              // if you pop the last character in the buffer
+        ringbuf.data[ringbuf.in] ='@';      // add the end of work variable
+        ringbuf.size++;                     // increase the size of the buffer
+        ringbuf.in = (ringbuf.in +1) % 32;  
+        wait_stage = 0;                     // let the @ variable be treated as any other character
+        end_transmit = 1;                   // mark the end of transmit
         return;
       }
     } else {  
