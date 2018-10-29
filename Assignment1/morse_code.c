@@ -202,7 +202,6 @@ void push(){
     return;
   }else if(ringbuf.size==0){
     if (ringbuf.size == 0 && end_transmit == 0){
-      TIMER_ON;
       ringbuf.data[ringbuf.in] = '~';
       ringbuf.size++;
       ringbuf.in = (ringbuf.in +1) % 32;
@@ -294,6 +293,7 @@ void pop(){
 // receive interrupt handler
 __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
 {
+  push();
   if (end_transmit ==1){
     end_transmit =0;
     TIMER_ON;
@@ -301,7 +301,7 @@ __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
   // enable the timer
   if(ringbuf.size == 32) { // if ringbuf size is full do nothing
     return;
-  } push();
+  } 
   
 }
 
