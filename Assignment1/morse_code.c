@@ -293,7 +293,6 @@ void pop(){
 // receive interrupt handler
 __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
 {
-  push();
   if (end_transmit ==1){
     end_transmit =0;
     TIMER_ON;
@@ -302,6 +301,7 @@ __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
   if(ringbuf.size == 32) { // if ringbuf size is full do nothing
     return;
   } 
+  push();
   
 }
 
