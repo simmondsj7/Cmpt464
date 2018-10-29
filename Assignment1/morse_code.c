@@ -227,8 +227,6 @@ void pop(){
   } 
   U0TXBUF = morse_string[morse_string_index];
   morse_string_index ++; 
-  ringbuf.size--;
-  ringbuf.out = (ringbuf.out + 1) % 32;
     
 }
 
@@ -239,10 +237,11 @@ void pop(){
   switch (wait_stage){
   case 0:
     if (morse_string_index >= global_length){
+      ringbuf.size--;
+      ringbuf.out = (ringbuf.out + 1) % 32;
 	    morse_string_index = 0;
       wait_stage = 2;
     } else {  
-
       switch(morse_string[morse_string_index]){
         case '.':
           // when the morse_code is outputing a dot wait 120 ms and transmit DOT
