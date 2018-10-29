@@ -303,7 +303,6 @@ __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
     pop();
     if(ringbuf.size == 0){
       TIMER_OFF;
-      IE1 &= ~UTXIE0; // if there is nothing in the buffer dont transmit anything
     } 
 // Disable the Transmit interupt
     IE1 &= ~UTXIE0;
