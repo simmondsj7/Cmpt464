@@ -305,9 +305,8 @@ __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
 __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
 { 
     pop();
-    if(end_transmit == 1){
+    if(end_transmit == 1 && morse_string[morse_string_index] == ' '){
       TIMER_OFF;
-      LOW_POWER_MODE;
     } 
 // Disable the Transmit interupt
     IE1 &= ~UTXIE0;
