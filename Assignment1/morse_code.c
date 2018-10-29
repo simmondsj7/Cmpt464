@@ -202,6 +202,7 @@ void push(){
     return;
   }else if(ringbuf.size>=0){
     if (ringbuf.size == 0){
+      TIMER_ON;
       ringbuf.data[ringbuf.in] = '~';
       ringbuf.size++;
       ringbuf.in = (ringbuf.in +1) % 32;
@@ -292,8 +293,8 @@ __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
   push();
   if(ringbuf.size == 32) { // if ringbuf size is full do nothing
     return;
-  } else if (ringbuf.size == 1) {
-        TIMER_ON;
+  } else if (ringbuf.size == 0) {
+        //TIMER_ON;
     }
   
 }
