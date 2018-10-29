@@ -200,19 +200,23 @@ void push(){
 // max size that im allowing. if the buffer is full do nothing
   if(ringbuf.size==32){
     return;
-  }else if(ringbuf.size>=0){
+  }else if(ringbuf.size==0){
     if (ringbuf.size == 0 && end_transmit == 0){
       TIMER_ON;
       ringbuf.data[ringbuf.in] = '~';
       ringbuf.size++;
       ringbuf.in = (ringbuf.in +1) % 32;
-    } else {
-      // if the buffer is greater than 0
-      ringbuf.data[ringbuf.in] =U0RXBUF;
-      ringbuf.size++;
-      ringbuf.in = (ringbuf.in +1) % 32;
-      return;
     }
+    // if the is 0 add the first character after the start sign
+    ringbuf.data[ringbuf.in] =U0RXBUF;
+    ringbuf.size++;
+    ringbuf.in = (ringbuf.in +1) % 32;
+    return;
+  } else if (ringbuf.size > 0){
+    ringbuf.data[ringbuf.in] =U0RXBUF;
+    ringbuf.size++;
+    ringbuf.in = (ringbuf.in +1) % 32;
+    return;
   }  
 }
 
