@@ -212,8 +212,8 @@ void push(){
     ringbuf.size++;
     ringbuf.in = (ringbuf.in +1) % 32;
     return;
-    /*
-  } else if (ringbuf.size > 0){
+    
+  } /*else if (ringbuf.size > 0){
     ringbuf.data[ringbuf.in] =U0RXBUF;
     ringbuf.size++;
     ringbuf.in = (ringbuf.in +1) % 32;
