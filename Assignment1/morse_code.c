@@ -201,7 +201,7 @@ void push(){
   if(ringbuf.size==32){
     return;
   }else if(ringbuf.size>=0){
-    if (ringbuf.size == 0 && end_transmit == 0){
+    if (ringbuf.size == 0 ){
       TIMER_ON;
       ringbuf.data[ringbuf.in] = '~';
       ringbuf.size++;
