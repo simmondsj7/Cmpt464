@@ -294,7 +294,7 @@ void pop(){
 // receive interrupt handler
 __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
 {
-  if (end_transmit = 1){
+  if (end_transmit == 1){
     TIMER_ON;
   }
   // enable the timer
