@@ -221,7 +221,6 @@ void push(){
 void pop(){
   U0TXBUF = morse_string[morse_string_index];
   morse_string_index ++; 
-    
 }
 
 // Timer interupt
@@ -240,7 +239,6 @@ void pop(){
         ringbuf.size++;
         ringbuf.in = (ringbuf.in +1) % 32;
         wait_stage = 0;
-        end_transmit = 1;
         return;
       }
     } else {  
@@ -295,7 +293,7 @@ __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
   if(ringbuf.size == 32) { // if ringbuf size is full do nothing
     return;
   } else if (ringbuf.size == 0) {
-        //TIMER_ON;
+    end_transmit = 1;
     }
   
 }
