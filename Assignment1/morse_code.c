@@ -268,7 +268,6 @@ void pop(){
           TBCCR0 += WORD_SPACE; // Wait for 840ms at the end
           IE1 |= UTXIE0;        // enable UART transmit for the end of work
           P4OUT |= R;           // turns off the Red led
-          end_transmit = 0;
           break;
         }
       }
