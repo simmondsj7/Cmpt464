@@ -17,6 +17,7 @@ char *morse_string;
 int morse_string_index = 0;
 int global_length = 0;
 int end_transmit = 0;
+int start_transmit =0;
 int wait_stage = 0; // 1 is between DOT or dash in morse
                     // 2 is between Letters
 
@@ -201,11 +202,12 @@ void push(){
   if(ringbuf.size==32){
     return;
   }else if(ringbuf.size>=0){
-    if (ringbuf.size == 0 && end_transmit ==0){
+    if (ringbuf.size == 0 && start_transmit ==1){
       TIMER_ON;
       ringbuf.data[ringbuf.in] = '~';
       ringbuf.size++;
       ringbuf.in = (ringbuf.in +1) % 32;
+      start_transmit =0;
     } 
     // if the is 0 add the first character after the start sign
     ringbuf.data[ringbuf.in] =U0RXBUF;
@@ -297,13 +299,15 @@ __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
 {
   
   if (end_transmit ==1){
-    //end_transmit =0;
+    end_transmit =0;
     TIMER_ON;
   }
   // enable the timer
   if(ringbuf.size == 32) { // if ringbuf size is full do nothing
     return;
-  } 
+  } else if (ringbuf.size ==0){
+    start_transmit =1;
+  }
   push();
   
   
@@ -315,7 +319,6 @@ __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
     pop();
     if(end_transmit == 1 && morse_string_index == global_length){
       LED_INIT;
-      end_transmit =0;
       TIMER_OFF;
       
     } 
