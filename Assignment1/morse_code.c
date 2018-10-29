@@ -206,9 +206,7 @@ void push(){
       ringbuf.data[ringbuf.in] = '~';
       ringbuf.size++;
       ringbuf.in = (ringbuf.in +1) % 32;
-    } else if (end_transmit ==1){
-      end_transmit =0;
-    }
+    } 
     // if the is 0 add the first character after the start sign
     ringbuf.data[ringbuf.in] =U0RXBUF;
     ringbuf.size++;
@@ -308,6 +306,7 @@ __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
 { 
     pop();
     if(end_transmit == 1 && morse_string[morse_string_index] == ' '){
+      end_transmit = 0;
       TIMER_OFF;
     } 
 // Disable the Transmit interupt
