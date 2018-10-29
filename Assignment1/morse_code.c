@@ -218,7 +218,7 @@ void push(){
 // is 0 and the buffer is empty than we return. If not than we check the
 // character that is in the buffer, see if the character is 
 void pop(){
-  if(ringbuf.size==0) {
+  if(end_transmit ==1) {
     ringbuf.data[ringbuf.in] ='@';
     ringbuf.size++;
     ringbuf.in = (ringbuf.in +1) % 32;
@@ -241,6 +241,9 @@ void pop(){
       ringbuf.out = (ringbuf.out + 1) % 32;
 	    morse_string_index = 0;
       wait_stage = 2;
+      if(ringbuf.size == 0){
+        end_transmit =1;
+      }
     } else {  
       switch(morse_string[morse_string_index]){
         case '.':
