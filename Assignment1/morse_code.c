@@ -206,6 +206,8 @@ void push(){
       ringbuf.data[ringbuf.in] = '~';
       ringbuf.size++;
       ringbuf.in = (ringbuf.in +1) % 32;
+    } else if (end_transmit ==1){
+      end_transmit =0;
     }
     // if the is 0 add the first character after the start sign
     ringbuf.data[ringbuf.in] =U0RXBUF;
