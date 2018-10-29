@@ -319,7 +319,7 @@ __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
     pop();
     if(end_transmit == 1 && morse_string_index == global_length){
       LED_INIT;
-      ringbuf.size =0;
+      ringbuf.size --;
       TIMER_OFF;
       
     } 
