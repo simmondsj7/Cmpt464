@@ -201,7 +201,7 @@ void push(){
   if(ringbuf.size==32){
     return;
   }else if(ringbuf.size>=0){
-    if (ringbuf.size == 0){
+    if (ringbuf.size == 0 && end_transmit == 0){
       TIMER_ON;
       ringbuf.data[ringbuf.in] = '~';
       ringbuf.size++;
@@ -240,6 +240,7 @@ void pop(){
         ringbuf.size++;
         ringbuf.in = (ringbuf.in +1) % 32;
         wait_stage = 0;
+        end_transmit = 1;
         return;
       }
     } else {  
@@ -267,6 +268,7 @@ void pop(){
           TBCCR0 += WORD_SPACE; // Wait for 840ms at the end
           IE1 |= UTXIE0;        // enable UART transmit for the end of work
           P4OUT |= R;           // turns off the Red led
+          end_transmit = 0;
           break;
         }
       }
