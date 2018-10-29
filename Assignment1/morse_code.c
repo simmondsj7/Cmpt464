@@ -302,10 +302,7 @@ __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
 { 
     pop();
     if(ringbuf.size == 0){
-      end_transmit = 1;
-      // SEND End of work
-      //morse_string = ".-.-.-";
-      //TODO: Sending process should be sychronized with the led status change
+      TIMER_OFF;
       IE1 &= ~UTXIE0; // if there is nothing in the buffer dont transmit anything
     } 
 // Disable the Transmit interupt
