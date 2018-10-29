@@ -298,7 +298,9 @@ __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
   
   if (end_transmit ==1){
     end_transmit =0;
-    Buffer ringbuf= {.in=0, .out=0, .size=0};
+    ringbuf.out =0;
+    ringbuf.size =0;
+    ringbuf.in =0;
     TIMER_ON;
   }
   // enable the timer
