@@ -200,7 +200,7 @@ void push(){
 // max size that im allowing. if the buffer is full do nothing
   if(ringbuf.size==32){
     return;
-  }else if(ringbuf.size==0){
+  }else if(ringbuf.size>=0){
     if (ringbuf.size == 0 && end_transmit == 0){
       TIMER_ON;
       ringbuf.data[ringbuf.in] = '~';
