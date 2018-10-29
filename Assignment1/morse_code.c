@@ -206,12 +206,13 @@ void push(){
       ringbuf.data[ringbuf.in] = '~';
       ringbuf.size++;
       ringbuf.in = (ringbuf.in +1) % 32;
+    } else {
+      // if the buffer is greater than 0
+      ringbuf.data[ringbuf.in] =U0RXBUF;
+      ringbuf.size++;
+      ringbuf.in = (ringbuf.in +1) % 32;
+      return;
     }
-    // if the buffer is empty of greater than 0
-    ringbuf.data[ringbuf.in] =U0RXBUF;
-    ringbuf.size++;
-    ringbuf.in = (ringbuf.in +1) % 32;
-    return;
   }  
 }
 
@@ -289,12 +290,9 @@ void pop(){
 __attribute__((interrupt(USART0RX_VECTOR))) void receive_handler()
 {
   // enable the timer
-  push();
   if(ringbuf.size == 32) { // if ringbuf size is full do nothing
     return;
-  } else if (ringbuf.size == 0) {
-    end_transmit = 1;
-    }
+  } push();
   
 }
 
