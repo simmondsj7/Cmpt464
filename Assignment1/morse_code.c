@@ -303,6 +303,7 @@ __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
     pop();
     if(ringbuf.size == 0){
       TIMER_OFF;
+      LOW_POWER_MODE;
     } 
 // Disable the Transmit interupt
     IE1 &= ~UTXIE0;
