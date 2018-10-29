@@ -307,10 +307,7 @@ __attribute__((interrupt(USART0TX_VECTOR))) void transmit_handler()
     pop();
     if(end_transmit == 1 && morse_string[morse_string_index] == ' '){
       end_transmit = 0;
-      IE1 |= URXIE0;
-      // Initialize all leds to be off
-      LED_INIT;
-      TIMER_OFF;
+      TBCTL = MC_0;
     } 
 // Disable the Transmit interupt
     IE1 &= ~UTXIE0;
